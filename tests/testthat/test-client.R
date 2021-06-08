@@ -12,7 +12,6 @@ test_that("low level client can send GET requests", {
 })
 
 test_that("low level client can send POST requests", {
-  test_seaweed_available()
   client <- seaweed_client$new("httpbin.org")
   res <- client$POST("post", body = list(test = "example"))
   expect_equal(res$request$method, "POST")
@@ -24,7 +23,6 @@ test_that("low level client can send POST requests", {
 })
 
 test_that("low level client can send DELETE requests", {
-  test_seaweed_available()
   client <- seaweed_client$new("httpbin.org")
   res <- client$DELETE("delete")
   expect_equal(res$request$method, "DELETE")
