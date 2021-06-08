@@ -5,10 +5,10 @@ test_that("low level client can send GET requests", {
   expect_equal(res$request$method, "GET")
   expect_equal(httr::status_code(res), 200)
   content <- httr::content(res)
-  expect_equal(content, list(
-    IsLeader = TRUE,
-    Leader = "master:9333"
-  ))
+  ## Note MaxVolumeId not always returned
+  expect_true(all(names(content %in% c("IsLeader", "Leader", "MaxVolumeId"))))
+  expect_equal(content$IsLeader, TRUE)
+  expect_equal(content$Leader, "seaweed_master:9333")
 })
 
 test_that("low level client can send POST requests", {
@@ -28,4 +28,10 @@ test_that("low level client can send DELETE requests", {
   expect_equal(res$request$method, "DELETE")
   expect_equal(httr::status_code(res), 200)
   content <- httr::content(res)
+})
+
+test_that("low level client can send generic requests", {
+  client <- seaweed_client$new("test")
+  res <- client$request(httr::GET, "httpbin.org/get")
+  expect_equal(httr::status_code(res), 200)
 })

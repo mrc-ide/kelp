@@ -6,18 +6,15 @@ seaweed_client <- R6::R6Class(
   "seaweed_client",
   cloneable = FALSE,
 
-  #' @description
-  #' Create client object for sending http requests to seaweed
-  #'
-  #' @param seaweed_url Root URL of Seaweed
-  #'
-  #' @param auth Authentication data as returned by the
-  #' \code{$get_auth_data()} method
-  #'
-  #' @return A new `sharepoint_client` object
   public = list(
     seaweed_url = NULL,
 
+    #' @description
+    #' Create client object for sending http requests to seaweed
+    #'
+    #' @param seaweed_url Root URL of Seaweed
+    #'
+    #' @return A new `seaweed_client` object
     initialize = function(seaweed_url) {
       self$seaweed_url <- seaweed_url
     },
@@ -29,7 +26,7 @@ seaweed_client <- R6::R6Class(
     #'
     #' @return HTTP response
     GET = function(...) {
-      private$request(httr::GET, ...)
+      private$master_request(httr::GET, ...)
     },
 
     #' @description
@@ -39,7 +36,7 @@ seaweed_client <- R6::R6Class(
     #'
     #' @return HTTP response
     POST = function(...) {
-      private$request(httr::POST, ...)
+      private$master_request(httr::POST, ...)
     },
 
     #' @description
@@ -49,22 +46,34 @@ seaweed_client <- R6::R6Class(
     #'
     #' @return HTTP response
     DELETE = function(...) {
-      private$request(httr::DELETE, ...)
-    }
-  ),
+      private$master_request(httr::DELETE, ...)
+    },
 
-  private = list(
     #' @description
-    #' Send an HTTP request to SeaweedFS
+    #' Send an HTTP request
     #'
     #' @param verb A httr function for type of request to send e.g. httr::GET
-    #' @param path Request path
+    #' @param url Request URL
     #' @param ... Additional args passed on to httr
     #'
     #' @return HTTP response
-    request = function(verb, path, ...) {
-      url <- paste(self$seaweed_url, path, sep = "/")
+    request = function(verb, url, ...) {
       verb(url, ...)
+    }
+  ),
+
+  #' @description
+  #' Send an HTTP request to SeaweedFS master
+  #'
+  #' @param verb A httr function for type of request to send e.g. httr::GET
+  #' @param path Request path
+  #' @param ... Additional args passed on to httr
+  #'
+  #' @return HTTP response
+  private = list(
+    master_request = function(verb, path, ...) {
+        url <- paste(self$seaweed_url, path, sep = "/")
+        verb(url, ...)
     }
   )
 )
