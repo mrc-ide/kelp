@@ -71,7 +71,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Start SeaweedFS
-        if: runner.os == 'Linux' || runner.os == 'macOS'
+        if: runner.os == 'Linux'
         run: ./scripts/seaweed start
 
       - name: Check
