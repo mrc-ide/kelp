@@ -7,6 +7,13 @@
 [![codecov.io](https://codecov.io/github/mrc-ide/kelp/coverage.svg?branch=main)](https://codecov.io/github/mrc-ide/kelp?branch=main)
 <!-- badges: end -->
 
+## Background
+
+This is an R wrapper around [SeaweedFS](https://github.com/chrislusf/seaweedfs). It currently makes functions available to:
+ * Upload a file
+ * Read a file
+ * Delete a file
+
 ## Installation
 
 To install `kelp`:
