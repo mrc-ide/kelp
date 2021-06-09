@@ -48,9 +48,6 @@ kelp <- R6::R6Class(
       ## There can be multiple - always return the first (maybe something
       ## more clever in future)
       url <- res$locations[[1]]$publicUrl
-      if (is.null(url)) {
-        stop("Failed to locate file")
-      }
       paste0(url, "/", fid)
     },
 
