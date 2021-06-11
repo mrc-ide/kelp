@@ -1,6 +1,10 @@
-#' Create a seaweed_master object for interacting with SeaweedFS master
+#' Seaweed Master API
 #'
-#' See https://github.com/chrislusf/seaweedfs/wiki/Master-Server-API for details
+#' @description
+#' Create a `seaweed_master` object for interacting with SeaweedFS master API
+#'
+#' See <https://github.com/chrislusf/seaweedfs/wiki/Master-Server-API> for
+#' details
 #'
 #' @keywords export
 seaweed_master <- R6::R6Class(
@@ -48,7 +52,7 @@ seaweed_master <- R6::R6Class(
     #' @param id volume ID or file ID to locate volume for
     #' @param collection Optional collection name this volume belongs to.
     #'
-    #' @return List of `seaweed_volume` objects representing the volumes
+    #' @return List of [seaweed_volume()] objects representing the volumes
     lookup = function(id, collection = NULL) {
       query <- list(volumeId = id)
       if (!is.null(collection)) {

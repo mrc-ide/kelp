@@ -1,4 +1,7 @@
-#' Create a kelp object for interacting with SeaweedFS
+#' Create a kelp object for interacting with SeaweedFS.
+#'
+#' This is a slightly higher level abstraction than [seaweed_master()] and
+#' [seaweed_volume()].
 #'
 #' @keywords export
 kelp <- R6::R6Class(
@@ -6,7 +9,7 @@ kelp <- R6::R6Class(
   cloneable = FALSE,
 
   public = list(
-    #' @field master A `seaweed_master` object for sending requests
+    #' @field master A [seaweed_master] object for sending requests
     master = NULL,
 
     #' @description
@@ -53,7 +56,9 @@ kelp <- R6::R6Class(
     #' @param fid SeaweedFS file ID to delete
     #' @param collection Optional collection name this file belongs to.
     #'   This helps speedup lookup - only the single fid will be deleted.
-    #'   See `delete_collection` to remove an entire collection.
+    #'   See \href{#method-delete_collection}{
+    #'   \code{kelp$delete_collection()}} to remove an entire
+    #'   collection.
     #'
     #' @return Nothing, called for side effects
     delete = function(fid, collection = NULL) {

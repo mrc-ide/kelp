@@ -2,17 +2,21 @@
 % Please edit documentation in R/kelp.R
 \name{kelp}
 \alias{kelp}
-\title{Create a kelp object for interacting with SeaweedFS}
+\title{Create a kelp object for interacting with SeaweedFS.}
 \description{
-Create a kelp object for interacting with SeaweedFS
+Create a kelp object for interacting with SeaweedFS.
 
-Create a kelp object for interacting with SeaweedFS
+Create a kelp object for interacting with SeaweedFS.
+}
+\details{
+This is a slightly higher level abstraction than \code{\link[=seaweed_master]{seaweed_master()}} and
+\code{\link[=seaweed_volume]{seaweed_volume()}}.
 }
 \keyword{export}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{seaweed_client}}{A \code{seaweed_client} object for sending requests}
+\item{\code{master}}{A \link{seaweed_master} object for sending requests}
 }
 \if{html}{\out{</div>}}
 }
@@ -21,9 +25,9 @@ Create a kelp object for interacting with SeaweedFS
 \itemize{
 \item \href{#method-new}{\code{kelp$new()}}
 \item \href{#method-upload}{\code{kelp$upload()}}
-\item \href{#method-file_url}{\code{kelp$file_url()}}
-\item \href{#method-read}{\code{kelp$read()}}
+\item \href{#method-download}{\code{kelp$download()}}
 \item \href{#method-delete}{\code{kelp$delete()}}
+\item \href{#method-delete_collection}{\code{kelp$delete_collection()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -52,57 +56,39 @@ A new \code{kelp} object
 \subsection{Method \code{upload()}}{
 Upload file to SeaweedFS
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{kelp$upload(path)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{kelp$upload(path, collection = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{path}}{Path to file to be uploaded}
+
+\item{\code{collection}}{Collection name, acts as a namespace for files.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-The uploaded location, name, URL and size
+The uploaded file ID.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-file_url"></a>}}
-\if{latex}{\out{\hypertarget{method-file_url}{}}}
-\subsection{Method \code{file_url()}}{
-Get file URL from file ID.
-
-This gets URL that can be used to read, update or delete a file. We
-don't just use the URL returned on file creation as the volume may
-have moved.
+\if{html}{\out{<a id="method-download"></a>}}
+\if{latex}{\out{\hypertarget{method-download}{}}}
+\subsection{Method \code{download()}}{
+Download file from SeaweedFS
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{kelp$file_url(fid)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{fid}}{SeaweedFS file ID}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-URL which can be used to read, update or delete a file
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-read"></a>}}
-\if{latex}{\out{\hypertarget{method-read}{}}}
-\subsection{Method \code{read()}}{
-Read file from SeaweedFS
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{kelp$read(fid)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{kelp$download(fid, path = tempfile(), collection = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{fid}}{SeaweedFS file ID to read}
+
+\item{\code{path}}{Path to download file to}
+
+\item{\code{collection}}{Optional collection name this file belongs to.}
 }
 \if{html}{\out{</div>}}
 }
@@ -116,18 +102,44 @@ The file contents
 \subsection{Method \code{delete()}}{
 Delete file from SeaweedFS
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{kelp$delete(fid)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{kelp$delete(fid, collection = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{fid}}{SeaweedFS file ID to delete}
+
+\item{\code{collection}}{Optional collection name this file belongs to.
+This helps speedup lookup - only the single fid will be deleted.
+See \href{#method-delete_collection}{
+\code{kelp$delete_collection()}} to remove an entire
+collection.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-Response from SeaweedFS, the deleted size
+Nothing, called for side effects
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-delete_collection"></a>}}
+\if{latex}{\out{\hypertarget{method-delete_collection}{}}}
+\subsection{Method \code{delete_collection()}}{
+Delete a collection of files
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{kelp$delete_collection(collection)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{collection}}{Collection name.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Nothing, called for side effects
 }
 }
 }

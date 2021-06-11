@@ -1,4 +1,10 @@
-#' Create a seaweed_volume object for interacting with SeaweedFS master
+#' Seaweed Volume API
+#'
+#' @description
+#' Create a `seaweed_volume` object for interacting with a SeaweedFS volume
+#'
+#' See <https://github.com/chrislusf/seaweedfs/wiki/Volume-Server-API> for
+#' details
 #'
 #' @keywords export
 seaweed_volume <- R6::R6Class(
@@ -23,8 +29,12 @@ seaweed_volume <- R6::R6Class(
     #' Upload a file to SeaweedFS
     #'
     #' @param path Path to file to upload
-    #' @param fid The file ID from SeaweedFS. See `seaweed_master$assign`
-    #' to get a file ID. Or use `seaweed_master$upload_file` to upload
+    #' @param fid The file ID from SeaweedFS. See
+    #' \href{../../kelp/html/seaweed_master.html#method-assign}{
+    #' \code{seaweed_master$assign()}}
+    #' to get a file ID. Or use
+    #' \href{../../kelp/html/seaweed_master.html#method-upload_file}{
+    #' \code{seaweed_master$upload_file()}} to upload
     #' directly.
     #'
     #' @return Size of uploaded file
