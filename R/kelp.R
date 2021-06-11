@@ -4,6 +4,7 @@
 #' [seaweed_volume()].
 #'
 #' @keywords export
+#' @importFrom R6 R6Class
 kelp <- R6::R6Class(
   "kelp",
   cloneable = FALSE,
