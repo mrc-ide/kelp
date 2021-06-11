@@ -21,9 +21,3 @@ test_that("low level client can send DELETE requests", {
   res <- client$DELETE("delete")
   expect_equal(res$url, "http://httpbin.org/delete")
 })
-
-test_that("low level client can send generic requests", {
-  client <- seaweed_client$new("test")
-  res <- client$request(httr::GET, "http://httpbin.org/get")
-  expect_equal(res$url, "http://httpbin.org/get")
-})

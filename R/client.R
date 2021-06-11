@@ -26,7 +26,7 @@ seaweed_client <- R6::R6Class(
     #'
     #' @return Response from SeaweedFS
     GET = function(...) {
-      self$master_request(httr::GET, ...)
+      self$request(httr::GET, ...)
     },
 
     #' @description
@@ -36,7 +36,7 @@ seaweed_client <- R6::R6Class(
     #'
     #' @return Response from SeaweedFS
     POST = function(...) {
-      self$master_request(httr::POST, ...)
+      self$request(httr::POST, ...)
     },
 
     #' @description
@@ -46,20 +46,7 @@ seaweed_client <- R6::R6Class(
     #'
     #' @return Response from SeaweedFS
     DELETE = function(...) {
-      self$master_request(httr::DELETE, ...)
-    },
-
-    #' @description
-    #' Send an HTTP request
-    #'
-    #' @param verb A httr function for type of request to send e.g. httr::GET
-    #' @param url Request URL
-    #' @param ... Additional args passed on to httr
-    #'
-    #' @return Response from SeaweedFS
-    request = function(verb, url, ...) {
-      res <- verb(url, ...)
-      self$parse_response(res)
+      self$request(httr::DELETE, ...)
     },
 
     #' @description
@@ -70,8 +57,9 @@ seaweed_client <- R6::R6Class(
     #' @param ... Additional args passed on to httr
     #'
     #' @return Response from SeaweedFS
-    master_request = function(verb, path, ...) {
-      res <- verb(self$seaweed_url, path = path, ...)
+    request = function(verb, path, ...) {
+      url <- paste0(self$seaweed_url, "/", path)
+      res <- verb(url, scheme = "http", ...)
       self$parse_response(res)
     },
 

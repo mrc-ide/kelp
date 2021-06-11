@@ -13,6 +13,13 @@ This is an R wrapper around [SeaweedFS](https://github.com/chrislusf/seaweedfs).
  * Upload a file
  * Read a file
  * Delete a file
+ 
+## Usage
+
+This package provides 3 class types to interact with SeaweedFS
+* seaweed_master - low level client exposes functions from master server API, designed to match as close to [master api spec](https://github.com/chrislusf/seaweedfs/wiki/Master-Server-API) as possible
+* seaweed_volume - low level client exposes functions from volume server API, designed to match as close to [volume api spec](https://github.com/chrislusf/seaweedfs/wiki/Volume-Server-API) as possible
+* kelp - wrapper for master and volume APIs which provides some higher level functions for interacting with SeaweedFS. Planning to support e.g. uploading and downloading raw R objects into the store in future.
 
 ## Installation
 

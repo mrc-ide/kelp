@@ -6,8 +6,8 @@ kelp <- R6::R6Class(
   cloneable = FALSE,
 
   public = list(
-    #' @field seaweed_client A `seaweed_client` object for sending requests
-    seaweed_client = NULL,
+    #' @field master A `seaweed_master` object for sending requests
+    master = NULL,
 
     #' @description
     #' Create client object for sending http requests to seaweed
@@ -16,61 +16,63 @@ kelp <- R6::R6Class(
     #'
     #' @return A new `kelp` object
     initialize = function(seaweed_url) {
-      self$seaweed_client <- seaweed_client$new(seaweed_url)
+      self$master <- seaweed_master$new(seaweed_url)
     },
 
     #' @description
     #' Upload file to SeaweedFS
     #'
     #' @param path Path to file to be uploaded
+    #' @param collection Collection name, acts as a namespace for files.
     #'
-    #' @return The uploaded location, name, URL and size
-    upload = function(path) {
-      if (!file.exists(path)) {
-        stop(sprintf("File at %s doesn't exist. Cannot upload.", path))
-      }
-      self$seaweed_client$POST("submit", body = list(
-        file = httr::upload_file(path)))
+    #' @return The uploaded file ID.
+    upload = function(path, collection = NULL) {
+      key <- self$master$assign(collection = collection)
+      volume <- seaweed_volume$new(key$publicUrl)
+      volume$upload(key$fid, path)
+      key$fid
     },
 
     #' @description
-    #' Get file URL from file ID.
-    #'
-    #' This gets URL that can be used to read, update or delete a file. We
-    #' don't just use the URL returned on file creation as the volume may
-    #' have moved.
-    #'
-    #' @param fid SeaweedFS file ID
-    #'
-    #' @return URL which can be used to read, update or delete a file
-    file_url = function(fid) {
-      res <- self$seaweed_client$GET(paste0("/dir/lookup?fileId=", fid))
-      ## There can be multiple - always return the first (maybe something
-      ## more clever in future)
-      url <- res$locations[[1]]$publicUrl
-      paste0(url, "/", fid)
-    },
-
-    #' @description
-    #' Read file from SeaweedFS
+    #' Download file from SeaweedFS
     #'
     #' @param fid SeaweedFS file ID to read
+    #' @param path Path to download file to
+    #' @param collection Optional collection name this file belongs to.
     #'
     #' @return The file contents
-    read = function(fid) {
-      url <- self$file_url(fid)
-      self$seaweed_client$request(httr::GET, url)
+    download = function(fid, path = tempfile(), collection = NULL) {
+      volumes <- self$master$lookup(fid, collection)
+      ## Download from 1st returned volume for now
+      volumes[[1]]$download(fid, path)
     },
 
     #' @description
     #' Delete file from SeaweedFS
     #'
     #' @param fid SeaweedFS file ID to delete
+    #' @param collection Optional collection name this file belongs to.
+    #'   This helps speedup lookup - only the single fid will be deleted.
+    #'   See `delete_collection` to remove an entire collection.
     #'
-    #' @return Response from SeaweedFS, the deleted size
-    delete = function(fid) {
-      url <- self$file_url(fid)
-      self$seaweed_client$request(httr::DELETE, url)
+    #' @return Nothing, called for side effects
+    delete = function(fid, collection = NULL) {
+      volumes <- self$master$lookup(fid, collection)
+      ## TODO: Do we have to delete from every volume?
+      lapply(volumes, function(volume) {
+        volume$delete(fid)
+      })
+      invisible(TRUE)
+    },
+
+    #' @description
+    #' Delete a collection of files
+    #'
+    #' @param collection Collection name.
+    #'
+    #' @return Nothing, called for side effects
+    delete_collection = function(collection) {
+      self$master$delete_collection(collection)
     }
   )
 )
