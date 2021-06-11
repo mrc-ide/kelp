@@ -71,8 +71,7 @@ seaweed_client <- R6::R6Class(
     #'
     #' @return Response from SeaweedFS
     master_request = function(verb, path, ...) {
-      url <- paste(self$seaweed_url, path, sep = "/")
-      res <- verb(url, ...)
+      res <- verb(self$seaweed_url, path = path, ...)
       self$parse_response(res)
     },
 

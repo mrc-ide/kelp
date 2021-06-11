@@ -1,4 +1,4 @@
-test_seaweed_available <- function(url = "localhost:9333") {
+test_seaweed_available <- function(url = "http://localhost:9333") {
   client <- seaweed_client$new(url)
   available <- tryCatch({
     res <- client$GET("cluster/status")
@@ -10,4 +10,8 @@ test_seaweed_available <- function(url = "localhost:9333") {
   invisible(available)
 }
 
-seaweed_master_url <- "localhost:9333"
+seaweed_master_url <- "http://localhost:9333"
+
+expect_no_error <- function(object) {
+  expect_error(object, regexp = NA)
+}
