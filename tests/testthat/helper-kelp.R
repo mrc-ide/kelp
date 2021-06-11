@@ -11,7 +11,9 @@ test_seaweed_available <- function(url = "http://localhost:9333") {
 }
 
 seaweed_master_url <- "http://localhost:9333"
+seaweed_volume_url <- "http://localhost:8080"
 
 expect_no_error <- function(object) {
   expect_error(object, regexp = NA)
 }
+

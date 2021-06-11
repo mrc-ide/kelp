@@ -17,6 +17,56 @@ seaweed_volume <- R6::R6Class(
     #' @return A new `seaweed_volume` object
     initialize = function(seaweed_url) {
       self$client <- seaweed_client$new(seaweed_url)
+    },
+
+    #' @description
+    #' Upload a file to SeaweedFS
+    #'
+    #' @param path Path to file to upload
+    #' @param fid The file ID from SeaweedFS. See `seaweed_master$assign`
+    #' to get a file ID. Or use `seaweed_master$upload_file` to upload
+    #' directly.
+    #'
+    #' @return Size of uploaded file
+    upload = function(fid, path) {
+      if (!file.exists(path)) {
+        stop(sprintf("File at %s doesn't exist. Cannot upload.", path))
+      }
+      self$client$POST(fid, body = list(
+        file = httr::upload_file(path)))
+    },
+
+    #' @description
+    #' Read file from SeaweedFS into R
+    #'
+    #' @param fid SeaweedFS file ID to read
+    #'
+    #' @return The file contents
+    read = function(fid) {
+      self$client$GET(fid)
+    },
+
+    #' @description
+    #' Download file from SeaweedFS to a local path
+    #'
+    #' @param fid SeaweedFS file ID to download
+    #' @param path Local file path to save to
+    #'
+    #' @return The file path written to
+    download = function(fid, path = tempfile()) {
+      self$client$GET(fid, httr::write_disk(path))
+      path
+    },
+
+    #' @description
+    #' Delete a file from SeaweedFS
+    #'
+    #' @param fid SeaweedFS file ID to delete
+    #'
+    #' @return Nothing, called for side effects
+    delete = function(fid) {
+      self$client$DELETE(fid)
+      invisible(TRUE)
     }
   )
 )

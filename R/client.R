@@ -89,7 +89,7 @@ seaweed_client <- R6::R6Class(
 kelp_error <- function(res) {
   dat <- httr::content(res, type = "application/json", encoding = "UTF-8")
   if (is.null(dat)) {
-    error_message <- "Empty error message"
+    error_message <- httr::http_status(res)$message
   } else {
     error_message <- list_to_character(dat$error)
   }

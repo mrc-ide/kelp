@@ -3,7 +3,7 @@ test_that("file key can be assigned", {
   master <- seaweed_master$new(seaweed_master_url)
   res <- master$assign()
   expect_setequal(names(res), c("fid", "url", "publicUrl", "count"))
-  expect_match(res$fid, "\\d,[A-Za-z0-9]{10}")
+  expect_match(res$fid, "\\d+,[A-Za-z0-9]{10}")
 })
 
 test_that("file key can be assigned with a collection", {
@@ -11,7 +11,7 @@ test_that("file key can be assigned with a collection", {
   master <- seaweed_master$new(seaweed_master_url)
   res <- master$assign(collection = "test_collection")
   expect_setequal(names(res), c("fid", "url", "publicUrl", "count"))
-  expect_match(res$fid, "\\d,[A-Za-z0-9]{10}")
+  expect_match(res$fid, "\\d+,[A-Za-z0-9]{10}")
 })
 
 test_that("volumes can be located with fid", {
@@ -72,4 +72,29 @@ test_that("trying to delete non-exitent collection throws error", {
 
   expect_error(master$delete_collection("not a collection"),
                "collection not a collection does not exist")
+})
+
+test_that("file can be directly uploaded to master", {
+  test_seaweed_available()
+  master <- seaweed_master$new(seaweed_master_url)
+
+  ## File can be written
+  t <- tempfile()
+  writeLines("test file", t)
+  res <- master$upload(t)
+  expect_setequal(names(res),
+                  c("eTag", "fid", "fileName", "fileUrl", "size"))
+  expect_match(res$fid, "\\d+,[A-Za-z0-9]{10}")
+  expect_equal(res$fileName, basename(t))
+  ## fileUrl is <ip-address>:<port>/<fid>
+  expect_match(res$fileUrl, "[\\d\\.]+:\\d{4}/\\d+,[A-Za-z0-9]{10}",
+               perl = TRUE)
+  expect_equal(res$size, 10)
+})
+
+test_that("uploading non-exitent file directly throws error", {
+  test_seaweed_available()
+  master <- seaweed_master$new(seaweed_master_url)
+  expect_error(master$upload("/path/to/file"),
+               "File at /path/to/file doesn't exist. Cannot upload.")
 })

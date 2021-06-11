@@ -70,6 +70,20 @@ seaweed_master <- R6::R6Class(
       query <- list(collection = collection)
       self$client$GET("col/delete", query = query)
       invisible(TRUE)
+    },
+
+    #' @description
+    #' Upload file to SeaweedFS
+    #'
+    #' @param path Path to file to be uploaded
+    #'
+    #' @return The uploaded location, name, URL and size
+    upload = function(path) {
+      if (!file.exists(path)) {
+        stop(sprintf("File at %s doesn't exist. Cannot upload.", path))
+      }
+      self$client$POST("submit", body = list(
+        file = httr::upload_file(path)))
     }
   )
 )

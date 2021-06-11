@@ -11,7 +11,7 @@ test_that("file can be uploaded, read and deleted from SeaweedFS", {
   expect_match(res$fid, "\\d,[A-Za-z0-9]{10}")
   expect_equal(res$fileName, basename(t))
   ## fileUrl is <ip-address>:<port>/<fid>
-  expect_match(res$fileUrl, "[\\d\\.]+:\\d{4}/\\d,[A-Za-z0-9]{10}",
+  expect_match(res$fileUrl, "[\\d\\.]+:\\d{4}/\\d+,[A-Za-z0-9]{10}",
                perl = TRUE)
   expect_equal(res$size, 10)
 
@@ -28,7 +28,8 @@ test_that("file can be uploaded, read and deleted from SeaweedFS", {
   expect_true(!is.null(del$size))
 
   ## File no longer exists
-  error <- expect_error(fs$read(res$fid), "Empty error message")
+  error <- expect_error(fs$read(res$fid), "Client error: (404) Not Found",
+                        fixed = TRUE)
   expect_equal(error$code, 404L)
 })
 
