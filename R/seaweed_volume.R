@@ -38,12 +38,31 @@ seaweed_volume <- R6::R6Class(
     #' directly.
     #'
     #' @return Size of uploaded file
-    upload = function(fid, path) {
+    upload_file = function(fid, path) {
       if (!file.exists(path)) {
         stop(sprintf("File at %s doesn't exist. Cannot upload.", path))
       }
       self$client$POST(fid, body = list(
         file = httr::upload_file(path)))
+    },
+
+    #' @description
+    #' Upload an arbitrary R object to SeaweedFS
+    #'
+    #' @param object The object to upload
+    #' @param fid The file ID from SeaweedFS. See
+    #' \href{../../kelp/html/seaweed_master.html#method-assign}{
+    #' \code{seaweed_master$assign()}}
+    #' to get a file ID. Or use
+    #' \href{../../kelp/html/seaweed_master.html#method-upload_file}{
+    #' \code{seaweed_master$upload_file()}} to upload
+    #' directly.
+    #'
+    #' @return Size of uploaded object
+    upload_object = function(fid, object) {
+      bin <- object_to_bin(object)
+      self$client$POST(fid, body = list(
+        file = bin))
     },
 
     #' @description
@@ -63,9 +82,20 @@ seaweed_volume <- R6::R6Class(
     #' @param path Local file path to save to
     #'
     #' @return The file path written to
-    download = function(fid, path = tempfile()) {
+    download_file = function(fid, path = tempfile()) {
       self$client$GET(fid, httr::write_disk(path))
       path
+    },
+
+    #' @description
+    #' Download and deserialize R object from SeaweedFS
+    #'
+    #' @param fid SeaweedFS file ID to download
+    #'
+    #' @return The deserialized object
+    download_object = function(fid) {
+      data <- self$read(fid)
+      bin_to_object(data)
     },
 
     #' @description

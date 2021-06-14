@@ -24,8 +24,10 @@ This is a slightly higher level abstraction than \code{\link[=seaweed_master]{se
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{kelp$new()}}
-\item \href{#method-upload}{\code{kelp$upload()}}
-\item \href{#method-download}{\code{kelp$download()}}
+\item \href{#method-upload_file}{\code{kelp$upload_file()}}
+\item \href{#method-download_file}{\code{kelp$download_file()}}
+\item \href{#method-upload_object}{\code{kelp$upload_object()}}
+\item \href{#method-download_object}{\code{kelp$download_object()}}
 \item \href{#method-delete}{\code{kelp$delete()}}
 \item \href{#method-delete_collection}{\code{kelp$delete_collection()}}
 }
@@ -51,12 +53,12 @@ A new \code{kelp} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-upload"></a>}}
-\if{latex}{\out{\hypertarget{method-upload}{}}}
-\subsection{Method \code{upload()}}{
+\if{html}{\out{<a id="method-upload_file"></a>}}
+\if{latex}{\out{\hypertarget{method-upload_file}{}}}
+\subsection{Method \code{upload_file()}}{
 Upload file to SeaweedFS
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{kelp$upload(path, collection = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{kelp$upload_file(path, collection = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -73,12 +75,12 @@ The uploaded file ID.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-download"></a>}}
-\if{latex}{\out{\hypertarget{method-download}{}}}
-\subsection{Method \code{download()}}{
+\if{html}{\out{<a id="method-download_file"></a>}}
+\if{latex}{\out{\hypertarget{method-download_file}{}}}
+\subsection{Method \code{download_file()}}{
 Download file from SeaweedFS
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{kelp$download(fid, path = tempfile(), collection = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{kelp$download_file(fid, path = tempfile(), collection = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -94,6 +96,50 @@ Download file from SeaweedFS
 }
 \subsection{Returns}{
 The file contents
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-upload_object"></a>}}
+\if{latex}{\out{\hypertarget{method-upload_object}{}}}
+\subsection{Method \code{upload_object()}}{
+Upload arbitrary R object to SeaweedFS
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{kelp$upload_object(object, collection = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{object}}{Object to be uploaded}
+
+\item{\code{collection}}{Collection name, acts as a namespace.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+The uploaded file ID.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-download_object"></a>}}
+\if{latex}{\out{\hypertarget{method-download_object}{}}}
+\subsection{Method \code{download_object()}}{
+Download arbitrary R object from SeaweedFS
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{kelp$download_object(fid, collection = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{fid}}{SeaweedFS file ID to download}
+
+\item{\code{collection}}{Optional collection name this file belongs to.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+The R object.
 }
 }
 \if{html}{\out{<hr>}}

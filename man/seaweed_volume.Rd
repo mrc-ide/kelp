@@ -21,9 +21,11 @@ details
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{seaweed_volume$new()}}
-\item \href{#method-upload}{\code{seaweed_volume$upload()}}
+\item \href{#method-upload_file}{\code{seaweed_volume$upload_file()}}
+\item \href{#method-upload_object}{\code{seaweed_volume$upload_object()}}
 \item \href{#method-read}{\code{seaweed_volume$read()}}
-\item \href{#method-download}{\code{seaweed_volume$download()}}
+\item \href{#method-download_file}{\code{seaweed_volume$download_file()}}
+\item \href{#method-download_object}{\code{seaweed_volume$download_object()}}
 \item \href{#method-delete}{\code{seaweed_volume$delete()}}
 }
 }
@@ -48,12 +50,12 @@ A new \code{seaweed_volume} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-upload"></a>}}
-\if{latex}{\out{\hypertarget{method-upload}{}}}
-\subsection{Method \code{upload()}}{
+\if{html}{\out{<a id="method-upload_file"></a>}}
+\if{latex}{\out{\hypertarget{method-upload_file}{}}}
+\subsection{Method \code{upload_file()}}{
 Upload a file to SeaweedFS
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{seaweed_volume$upload(fid, path)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{seaweed_volume$upload_file(fid, path)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -73,6 +75,34 @@ directly.}
 }
 \subsection{Returns}{
 Size of uploaded file
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-upload_object"></a>}}
+\if{latex}{\out{\hypertarget{method-upload_object}{}}}
+\subsection{Method \code{upload_object()}}{
+Upload an arbitrary R object to SeaweedFS
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{seaweed_volume$upload_object(fid, object)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{fid}}{The file ID from SeaweedFS. See
+\href{../../kelp/html/seaweed_master.html#method-assign}{
+\code{seaweed_master$assign()}}
+to get a file ID. Or use
+\href{../../kelp/html/seaweed_master.html#method-upload_file}{
+\code{seaweed_master$upload_file()}} to upload
+directly.}
+
+\item{\code{object}}{The object to upload}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Size of uploaded object
 }
 }
 \if{html}{\out{<hr>}}
@@ -96,12 +126,12 @@ The file contents
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-download"></a>}}
-\if{latex}{\out{\hypertarget{method-download}{}}}
-\subsection{Method \code{download()}}{
+\if{html}{\out{<a id="method-download_file"></a>}}
+\if{latex}{\out{\hypertarget{method-download_file}{}}}
+\subsection{Method \code{download_file()}}{
 Download file from SeaweedFS to a local path
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{seaweed_volume$download(fid, path = tempfile())}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{seaweed_volume$download_file(fid, path = tempfile())}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -115,6 +145,26 @@ Download file from SeaweedFS to a local path
 }
 \subsection{Returns}{
 The file path written to
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-download_object"></a>}}
+\if{latex}{\out{\hypertarget{method-download_object}{}}}
+\subsection{Method \code{download_object()}}{
+Download and deserialize R object from SeaweedFS
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{seaweed_volume$download_object(fid)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{fid}}{SeaweedFS file ID to download}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+The deserialized object
 }
 }
 \if{html}{\out{<hr>}}
