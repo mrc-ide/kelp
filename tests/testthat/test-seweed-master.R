@@ -33,14 +33,17 @@ test_that("volumes can be located with fid", {
 
   ## errors if unknown collection
   expect_error(master$lookup(key$fid, collection = "test"),
-               "volume id \\d not found")
+               "volume id \\d+ not found")
 })
 
 test_that("volumes can be located with volume id", {
   test_seaweed_available()
   master <- seaweed_master$new(seaweed_master_url)
+  key <- master$assign(collection = "test_collection")
+  ## File id looks like <volume>,<file key><file cookie>
+  volume_id <- strsplit(key$fid, ",")[[1]][1]
 
-  res <- master$lookup("1")
+  res <- master$lookup(volume_id)
   expect_length(res, 1)
   expect_s3_class(res[[1]], "seaweed_volume")
 })
