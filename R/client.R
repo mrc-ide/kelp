@@ -7,6 +7,7 @@ seaweed_client <- R6::R6Class(
   cloneable = FALSE,
 
   public = list(
+    #' @field client The base URL for sending requests to SeaweedFS.
     seaweed_url = NULL,
 
     #' @description
