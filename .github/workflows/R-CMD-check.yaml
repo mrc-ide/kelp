@@ -74,8 +74,17 @@ jobs:
         if: runner.os == 'Linux'
         run: ./scripts/seaweed start
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v1
+      - name: Create free space
+        if: runner.os == 'Linux'
+        run: |
+          # Workaround to provide additional free space for testing.
+          # We need this because otherwise SeaweedFS runs out of space
+          # and builds run until they time out
+          # https://github.com/actions/virtual-environments/issues/2840
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
 
       - name: Check
         env:
