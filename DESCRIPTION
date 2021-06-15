@@ -17,3 +17,4 @@ Imports:
     R6
 Suggests:
     testthat
+Config/testthat/edition: 3
