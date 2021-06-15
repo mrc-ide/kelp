@@ -10,9 +10,6 @@ kelp <- R6::R6Class(
   cloneable = FALSE,
 
   public = list(
-    #' @field master A [seaweed_master] object for sending requests
-    master = NULL,
-
     #' @description
     #' Create client object for sending http requests to seaweed
     #'
@@ -20,7 +17,7 @@ kelp <- R6::R6Class(
     #'
     #' @return A new `kelp` object
     initialize = function(seaweed_url) {
-      self$master <- seaweed_master$new(seaweed_url)
+      private$master <- seaweed_master$new(seaweed_url)
     },
 
     #' @description
@@ -31,7 +28,7 @@ kelp <- R6::R6Class(
     #'
     #' @return The uploaded file ID.
     upload_file = function(path, collection = NULL) {
-      key <- self$master$assign(collection = collection)
+      key <- private$master$assign(collection = collection)
       volume <- seaweed_volume$new(key$publicUrl)
       volume$upload_file(key$fid, path)
       key$fid
@@ -46,7 +43,7 @@ kelp <- R6::R6Class(
     #'
     #' @return The file contents
     download_file = function(fid, path = tempfile(), collection = NULL) {
-      volumes <- self$master$lookup(fid, collection)
+      volumes <- private$master$lookup(fid, collection)
       ## Download from 1st returned volume for now
       volumes[[1]]$download_file(fid, path)
     },
@@ -59,7 +56,7 @@ kelp <- R6::R6Class(
     #'
     #' @return The uploaded file ID.
     upload_object = function(object, collection = NULL) {
-      key <- self$master$assign(collection = collection)
+      key <- private$master$assign(collection = collection)
       volume <- seaweed_volume$new(key$publicUrl)
       volume$upload_object(key$fid, object)
       key$fid
@@ -73,7 +70,7 @@ kelp <- R6::R6Class(
     #'
     #' @return The R object.
     download_object = function(fid, collection = NULL) {
-      volumes <- self$master$lookup(fid, collection)
+      volumes <- private$master$lookup(fid, collection)
       volumes[[1]]$download_object(fid)
     },
 
@@ -89,7 +86,7 @@ kelp <- R6::R6Class(
     #'
     #' @return Nothing, called for side effects
     delete = function(fid, collection = NULL) {
-      volumes <- self$master$lookup(fid, collection)
+      volumes <- private$master$lookup(fid, collection)
       for (volume in volumes) {
         volume$delete(fid)
       }
@@ -103,7 +100,12 @@ kelp <- R6::R6Class(
     #'
     #' @return Nothing, called for side effects
     delete_collection = function(collection) {
-      self$master$delete_collection(collection)
+      private$master$delete_collection(collection)
     }
+  ),
+
+  private = list(
+    # A `seaweed_master` object for sending requests
+    master = NULL
   )
 )

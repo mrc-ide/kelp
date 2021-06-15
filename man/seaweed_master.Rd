@@ -10,13 +10,6 @@ See \url{https://github.com/chrislusf/seaweedfs/wiki/Master-Server-API} for
 details
 }
 \keyword{export}
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{client}}{A \code{seaweed_client} object for sending requests}
-}
-\if{html}{\out{</div>}}
-}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{

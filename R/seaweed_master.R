@@ -12,9 +12,6 @@ seaweed_master <- R6::R6Class(
   cloneable = FALSE,
 
   public = list(
-    #' @field client A `seaweed_client` object for sending requests
-    client = NULL,
-
     #' @description
     #' Create client object for sending http requests to seaweed master
     #'
@@ -22,7 +19,7 @@ seaweed_master <- R6::R6Class(
     #'
     #' @return A new `seaweed_master` object
     initialize = function(seaweed_url) {
-      self$client <- seaweed_client$new(seaweed_url)
+      private$client <- seaweed_client$new(seaweed_url)
     },
 
     #' @description
@@ -40,7 +37,7 @@ seaweed_master <- R6::R6Class(
       if (!is.null(collection)) {
         query[["collection"]] <- collection
       }
-      self$client$GET("dir/assign", query = query)
+      private$client$GET("dir/assign", query = query)
     },
 
     #' @description
@@ -58,7 +55,7 @@ seaweed_master <- R6::R6Class(
       if (!is.null(collection)) {
         query[["collection"]] <- collection
       }
-      res <- self$client$GET("dir/lookup", query = query)
+      res <- private$client$GET("dir/lookup", query = query)
       lapply(res$locations, function(location) {
         seaweed_volume$new(location$publicUrl)
       })
@@ -72,7 +69,7 @@ seaweed_master <- R6::R6Class(
     #' @return Nothing, called for side effects
     delete_collection = function(collection) {
       query <- list(collection = collection)
-      self$client$GET("col/delete", query = query)
+      private$client$GET("col/delete", query = query)
       invisible(TRUE)
     },
 
@@ -86,8 +83,13 @@ seaweed_master <- R6::R6Class(
       if (!file.exists(path)) {
         stop(sprintf("File at %s doesn't exist. Cannot upload.", path))
       }
-      self$client$POST("submit", body = list(
+      private$client$POST("submit", body = list(
         file = httr::upload_file(path)))
     }
+  ),
+
+  private = list(
+    # A `seaweed_client` object for sending requests
+    client = NULL
   )
 )

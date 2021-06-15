@@ -12,9 +12,6 @@ seaweed_volume <- R6::R6Class(
   cloneable = FALSE,
 
   public = list(
-    #' @field client A `seaweed_client` object for sending requests
-    client = NULL,
-
     #' @description
     #' Create client object for sending http requests to seaweed volume
     #'
@@ -22,7 +19,7 @@ seaweed_volume <- R6::R6Class(
     #'
     #' @return A new `seaweed_volume` object
     initialize = function(seaweed_url) {
-      self$client <- seaweed_client$new(seaweed_url)
+      private$client <- seaweed_client$new(seaweed_url)
     },
 
     #' @description
@@ -42,7 +39,7 @@ seaweed_volume <- R6::R6Class(
       if (!file.exists(path)) {
         stop(sprintf("File at %s doesn't exist. Cannot upload.", path))
       }
-      self$client$POST(fid, body = list(
+      private$client$POST(fid, body = list(
         file = httr::upload_file(path)))
     },
 
@@ -61,8 +58,7 @@ seaweed_volume <- R6::R6Class(
     #' @return Size of uploaded object
     upload_object = function(fid, object) {
       bin <- object_to_bin(object)
-      self$client$POST(fid, body = list(
-        file = bin))
+      private$client$POST(fid, body = list(file = bin))
     },
 
     #' @description
@@ -72,7 +68,7 @@ seaweed_volume <- R6::R6Class(
     #'
     #' @return The file contents
     read = function(fid) {
-      self$client$GET(fid)
+      private$client$GET(fid)
     },
 
     #' @description
@@ -83,7 +79,7 @@ seaweed_volume <- R6::R6Class(
     #'
     #' @return The file path written to
     download_file = function(fid, path = tempfile()) {
-      self$client$GET(fid, httr::write_disk(path))
+      private$client$GET(fid, httr::write_disk(path))
       path
     },
 
@@ -105,8 +101,13 @@ seaweed_volume <- R6::R6Class(
     #'
     #' @return Nothing, called for side effects
     delete = function(fid) {
-      self$client$DELETE(fid)
+      private$client$DELETE(fid)
       invisible(TRUE)
     }
+  ),
+
+  private = list(
+    # A `seaweed_client` object for sending requests
+    client = NULL
   )
 )

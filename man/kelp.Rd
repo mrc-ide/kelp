@@ -12,13 +12,6 @@ Create a kelp object for interacting with SeaweedFS.
 This is a slightly higher level abstraction than \code{\link[=seaweed_master]{seaweed_master()}} and
 \code{\link[=seaweed_volume]{seaweed_volume()}}.
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{master}}{A \link{seaweed_master} object for sending requests}
-}
-\if{html}{\out{</div>}}
-}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
