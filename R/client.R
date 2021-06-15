@@ -61,15 +61,16 @@ seaweed_client <- R6::R6Class(
     request = function(verb, path, ...) {
       url <- paste0(self$seaweed_url, "/", path)
       res <- verb(url, scheme = "http", ...)
-      self$parse_response(res)
-    },
+      private$parse_response(res)
+    }
+  ),
 
+  private = list(
     parse_response = function(res) {
       code <- httr::status_code(res)
       if (code >= 400 && code < 600) {
         stop(kelp_error(res))
       }
-      ## Can be JSON or plain text response
       httr::content(res, encoding = "UTF-8")
     }
   )
