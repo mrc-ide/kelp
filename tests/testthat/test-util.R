@@ -10,7 +10,7 @@ test_that("null-or-value works", {
 test_that("binrary serialisation is transitive", {
   f <- function(x, identical = TRUE) {
     y <- bin_to_object(object_to_bin(x))
-    expect_equivalent(x, y)
+    expect_equal(x, y, check.attributes = FALSE)
   }
   f(NULL)
   f(1)
