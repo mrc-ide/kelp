@@ -90,10 +90,9 @@ kelp <- R6::R6Class(
     #' @return Nothing, called for side effects
     delete = function(fid, collection = NULL) {
       volumes <- self$master$lookup(fid, collection)
-      ## TODO: Do we have to delete from every volume?
-      lapply(volumes, function(volume) {
+      for (volume in volumes) {
         volume$delete(fid)
-      })
+      }
       invisible(TRUE)
     },
 
