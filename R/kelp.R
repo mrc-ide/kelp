@@ -3,7 +3,7 @@
 #' This is a slightly higher level abstraction than [seaweed_master()] and
 #' [seaweed_volume()].
 #'
-#' @keywords export
+#' @export
 #' @importFrom R6 R6Class
 kelp <- R6::R6Class(
   "kelp",
