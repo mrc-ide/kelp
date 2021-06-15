@@ -23,7 +23,7 @@ seaweed_volume <- R6::R6Class(
     },
 
     #' @description
-    #' Upload a file to SeaweedFS
+    #' Upload a file to SeaweedFS.
     #'
     #' @param path Path to file to upload
     #' @param fid The file ID from SeaweedFS. See
@@ -44,7 +44,11 @@ seaweed_volume <- R6::R6Class(
     },
 
     #' @description
-    #' Upload an arbitrary R object to SeaweedFS
+    #' Upload an arbitrary R object to SeaweedFS.
+    #'
+    #' This serializes R object to raw vector of bytes and then
+    #' saves bytes to SeaweedFS. To recover R object as saved use
+    #' \href{#method-download_object}{\code{seaweed_volume$download_object()}}
     #'
     #' @param object The object to upload
     #' @param fid The file ID from SeaweedFS. See
@@ -72,7 +76,13 @@ seaweed_volume <- R6::R6Class(
     },
 
     #' @description
-    #' Download file from SeaweedFS to a local path
+    #' Download file from SeaweedFS to a local path.
+    #'
+    #' If called with an `fid` matching an R object uploaded via
+    #' \href{#method-upload_object}{\code{seaweed_volume$upload_object()}}
+    #' then this will download raw bytes from SeaweedFS which can
+    #' be converted back to R object at later point using `unserialize`
+    #' or `readRDS`.
     #'
     #' @param fid SeaweedFS file ID to download
     #' @param path Local file path to save to
@@ -86,11 +96,21 @@ seaweed_volume <- R6::R6Class(
     #' @description
     #' Download and deserialize R object from SeaweedFS
     #'
+    #' If data downloaded from SeaweedFS is not unserializable (i.e. it was
+    #' written using \href{#method-upload_file}{
+    #'   \code{seaweed_volume$upload_file()}}) then
+    #' this will throw an error. See \href{#method-download_file}{
+    #'   \code{seaweed_volume$download_file()}} to download as a file.
+    #'
     #' @param fid SeaweedFS file ID to download
     #'
     #' @return The deserialized object
     download_object = function(fid) {
       data <- self$read(fid)
+      if (typeof(data) != "raw") {
+        stop(
+          "Cannot convert downloaded data to an R object. Try `$download_file`")
+      }
       bin_to_object(data)
     },
 

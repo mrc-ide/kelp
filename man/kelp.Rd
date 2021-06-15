@@ -71,6 +71,12 @@ The uploaded file ID.
 \if{latex}{\out{\hypertarget{method-download_file}{}}}
 \subsection{Method \code{download_file()}}{
 Download file from SeaweedFS
+
+If called with an \code{fid} matching an R object uploaded via
+\href{#method-upload_object}{\code{kelp$upload_object()}}
+then this will download raw bytes from SeaweedFS which can
+be converted back to R object at later point using \code{unserialize}
+or \code{readRDS}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{kelp$download_file(fid, path = tempfile(), collection = NULL)}\if{html}{\out{</div>}}
 }
@@ -94,7 +100,11 @@ The file contents
 \if{html}{\out{<a id="method-upload_object"></a>}}
 \if{latex}{\out{\hypertarget{method-upload_object}{}}}
 \subsection{Method \code{upload_object()}}{
-Upload arbitrary R object to SeaweedFS
+Upload arbitrary R object to SeaweedFS.
+
+This serializes R object to raw vector of bytes and then
+saves bytes to SeaweedFS. To recover R object as saved use
+\href{#method-download_object}{\code{seaweed_volume$download_object()}}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{kelp$upload_object(object, collection = NULL)}\if{html}{\out{</div>}}
 }
@@ -117,6 +127,12 @@ The uploaded file ID.
 \if{latex}{\out{\hypertarget{method-download_object}{}}}
 \subsection{Method \code{download_object()}}{
 Download arbitrary R object from SeaweedFS
+
+If data downloaded from SeaweedFS is not unserializable (i.e. it was
+written using \href{#method-upload_file}{
+\code{kelp$upload_file()}}) then
+this will throw an error. See \href{#method-download_file}{
+\code{kelp$download_file()}} to download as a file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{kelp$download_object(fid, collection = NULL)}\if{html}{\out{</div>}}
 }

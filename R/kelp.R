@@ -37,6 +37,12 @@ kelp <- R6::R6Class(
     #' @description
     #' Download file from SeaweedFS
     #'
+    #' If called with an `fid` matching an R object uploaded via
+    #' \href{#method-upload_object}{\code{kelp$upload_object()}}
+    #' then this will download raw bytes from SeaweedFS which can
+    #' be converted back to R object at later point using `unserialize`
+    #' or `readRDS`.
+    #'
     #' @param fid SeaweedFS file ID to read
     #' @param path Path to download file to
     #' @param collection Optional collection name this file belongs to.
@@ -49,7 +55,11 @@ kelp <- R6::R6Class(
     },
 
     #' @description
-    #' Upload arbitrary R object to SeaweedFS
+    #' Upload arbitrary R object to SeaweedFS.
+    #'
+    #' This serializes R object to raw vector of bytes and then
+    #' saves bytes to SeaweedFS. To recover R object as saved use
+    #' \href{#method-download_object}{\code{seaweed_volume$download_object()}}
     #'
     #' @param object Object to be uploaded
     #' @param collection Collection name, acts as a namespace.
@@ -64,6 +74,12 @@ kelp <- R6::R6Class(
 
     #' @description
     #' Download arbitrary R object from SeaweedFS
+    #'
+    #' If data downloaded from SeaweedFS is not unserializable (i.e. it was
+    #' written using \href{#method-upload_file}{
+    #'   \code{kelp$upload_file()}}) then
+    #' this will throw an error. See \href{#method-download_file}{
+    #'   \code{kelp$download_file()}} to download as a file.
     #'
     #' @param fid SeaweedFS file ID to download
     #' @param collection Optional collection name this file belongs to.

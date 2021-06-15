@@ -96,3 +96,20 @@ test_that("arbitrary R object can be stored and retrieved", {
   out <- volume$download_object(key$fid)
   expect_equal(out, mtcars)
 })
+
+test_that("trying to download file as an object returns error", {
+  test_seaweed_available()
+  master <- seaweed_master$new(seaweed_master_url)
+  key <- master$assign()
+  volume <- seaweed_volume$new(seaweed_volume_url)
+
+  ## File can be written
+  t <- tempfile()
+  writeLines("test file", t)
+  res <- volume$upload_file(key$fid, t)
+
+  expect_error(
+    volume$download_object(key$fid),
+    "Cannot convert downloaded data to an R object. Try `$download_file`",
+    fixed = TRUE)
+})

@@ -46,7 +46,7 @@ A new \code{seaweed_volume} object
 \if{html}{\out{<a id="method-upload_file"></a>}}
 \if{latex}{\out{\hypertarget{method-upload_file}{}}}
 \subsection{Method \code{upload_file()}}{
-Upload a file to SeaweedFS
+Upload a file to SeaweedFS.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{seaweed_volume$upload_file(fid, path)}\if{html}{\out{</div>}}
 }
@@ -74,7 +74,11 @@ Size of uploaded file
 \if{html}{\out{<a id="method-upload_object"></a>}}
 \if{latex}{\out{\hypertarget{method-upload_object}{}}}
 \subsection{Method \code{upload_object()}}{
-Upload an arbitrary R object to SeaweedFS
+Upload an arbitrary R object to SeaweedFS.
+
+This serializes R object to raw vector of bytes and then
+saves bytes to SeaweedFS. To recover R object as saved use
+\href{#method-download_object}{\code{seaweed_volume$download_object()}}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{seaweed_volume$upload_object(fid, object)}\if{html}{\out{</div>}}
 }
@@ -122,7 +126,13 @@ The file contents
 \if{html}{\out{<a id="method-download_file"></a>}}
 \if{latex}{\out{\hypertarget{method-download_file}{}}}
 \subsection{Method \code{download_file()}}{
-Download file from SeaweedFS to a local path
+Download file from SeaweedFS to a local path.
+
+If called with an \code{fid} matching an R object uploaded via
+\href{#method-upload_object}{\code{seaweed_volume$upload_object()}}
+then this will download raw bytes from SeaweedFS which can
+be converted back to R object at later point using \code{unserialize}
+or \code{readRDS}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{seaweed_volume$download_file(fid, path = tempfile())}\if{html}{\out{</div>}}
 }
@@ -145,6 +155,12 @@ The file path written to
 \if{latex}{\out{\hypertarget{method-download_object}{}}}
 \subsection{Method \code{download_object()}}{
 Download and deserialize R object from SeaweedFS
+
+If data downloaded from SeaweedFS is not unserializable (i.e. it was
+written using \href{#method-upload_file}{
+\code{seaweed_volume$upload_file()}}) then
+this will throw an error. See \href{#method-download_file}{
+\code{seaweed_volume$download_file()}} to download as a file.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{seaweed_volume$download_object(fid)}\if{html}{\out{</div>}}
 }
