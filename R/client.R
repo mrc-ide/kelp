@@ -23,31 +23,37 @@ seaweed_client <- R6::R6Class(
     #' @description
     #' Send GET request to SeaweedFS master
     #'
+    #' @param path Request path
+    #' @param as Type of response, json, text or raw
     #' @param ... Args passed on to httr
     #'
     #' @return Response from SeaweedFS
-    GET = function(...) {
-      self$request(httr::GET, ...)
+    GET = function(path, as = "json", ...) {
+      self$request(httr::GET, path, as, ...)
     },
 
     #' @description
     #' Send POST request to SeaweedFS master
     #'
+    #' @param path Request path
+    #' @param as Type of response, json, text or raw
     #' @param ... Args passed on to httr
     #'
     #' @return Response from SeaweedFS
-    POST = function(...) {
-      self$request(httr::POST, ...)
+    POST = function(path, as = "json", ...) {
+      self$request(httr::POST, path, as, ...)
     },
 
     #' @description
     #' Send DELETE request to SeaweedFS
     #'
+    #' @param path Request path
+    #' @param as Type of response, json, text or raw
     #' @param ... Args passed on to httr
     #'
     #' @return Response from SeaweedFS
-    DELETE = function(...) {
-      self$request(httr::DELETE, ...)
+    DELETE = function(path, as = "json", ...) {
+      self$request(httr::DELETE, path, as, ...)
     },
 
     #' @description
@@ -55,23 +61,34 @@ seaweed_client <- R6::R6Class(
     #'
     #' @param verb A httr function for type of request to send e.g. httr::GET
     #' @param path Request path
+    #' @param as Type of response, json, text or raw
     #' @param ... Additional args passed on to httr
     #'
     #' @return Response from SeaweedFS
-    request = function(verb, path, ...) {
+    request = function(verb, path, as = "json", ...) {
       url <- paste0(self$seaweed_url, "/", path)
       res <- verb(url, scheme = "http", ...)
-      private$parse_response(res)
+      private$parse_response(res, as)
     }
   ),
 
   private = list(
-    parse_response = function(res) {
+    parse_response = function(res, as = "json") {
       code <- httr::status_code(res)
       if (code >= 400 && code < 600) {
         stop(kelp_error(res))
       }
-      httr::content(res, encoding = "UTF-8")
+      httr_as <- as
+      ## If JSON read as text and convert afterwards
+      if (httr_as == "json") {
+        httr_as <- "text"
+      }
+      content <- httr::content(res, as = httr_as, encoding = "UTF-8")
+      if (as == "json") {
+        content <- jsonlite::fromJSON(content, simplifyDataFrame = FALSE,
+                                      simplifyMatrix = FALSE)
+      }
+      content
     }
   )
 )

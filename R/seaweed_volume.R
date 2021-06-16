@@ -39,7 +39,7 @@ seaweed_volume <- R6::R6Class(
       if (!file.exists(path)) {
         stop(sprintf("File at %s doesn't exist. Cannot upload.", path))
       }
-      private$client$POST(fid, body = list(
+      private$client$POST(fid, as = "json", body = list(
         file = httr::upload_file(path)))
     },
 
@@ -72,7 +72,7 @@ seaweed_volume <- R6::R6Class(
     #'
     #' @return The file contents
     read = function(fid) {
-      private$client$GET(fid)
+      private$client$GET(fid, as = "text")
     },
 
     #' @description
@@ -89,7 +89,7 @@ seaweed_volume <- R6::R6Class(
     #'
     #' @return The file path written to
     download_file = function(fid, path = tempfile()) {
-      private$client$GET(fid, httr::write_disk(path))
+      private$client$GET(fid, as = "text", httr::write_disk(path))
       path
     },
 
@@ -106,12 +106,14 @@ seaweed_volume <- R6::R6Class(
     #'
     #' @return The deserialized object
     download_object = function(fid) {
-      data <- self$read(fid)
-      if (typeof(data) != "raw") {
-        stop(
-          "Cannot convert downloaded data to an R object. Try `$download_file`")
-      }
-      bin_to_object(data)
+      data <- private$client$GET(fid, as = "raw")
+      tryCatch(
+        bin_to_object(data),
+        error = function(e) {
+          stop(paste0("Cannot convert downloaded data to an R object. ",
+                      "Try `$download_file`"))
+        }
+      )
     },
 
     #' @description

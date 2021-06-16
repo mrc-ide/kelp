@@ -37,7 +37,7 @@ seaweed_master <- R6::R6Class(
       if (!is.null(collection)) {
         query[["collection"]] <- collection
       }
-      private$client$GET("dir/assign", query = query)
+      private$client$POST("dir/assign", query = query)
     },
 
     #' @description
@@ -69,7 +69,7 @@ seaweed_master <- R6::R6Class(
     #' @return Nothing, called for side effects
     delete_collection = function(collection) {
       query <- list(collection = collection)
-      private$client$GET("col/delete", query = query)
+      private$client$DELETE("col/delete", as = "raw", query = query)
       invisible(TRUE)
     },
 
