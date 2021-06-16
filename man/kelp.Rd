@@ -72,19 +72,19 @@ The uploaded file ID.
 \subsection{Method \code{download_file()}}{
 Download file from SeaweedFS
 
-If called with an \code{fid} matching an R object uploaded via
+If called with an \code{id} matching an R object uploaded via
 \href{#method-upload_object}{\code{kelp$upload_object()}}
 then this will download raw bytes from SeaweedFS which can
 be converted back to R object at later point using \code{unserialize}
 or \code{readRDS}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{kelp$download_file(fid, path = tempfile(), collection = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{kelp$download_file(id, path = tempfile(), collection = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{fid}}{SeaweedFS file ID to read}
+\item{\code{id}}{SeaweedFS file ID to read}
 
 \item{\code{path}}{Path to download file to}
 
@@ -134,13 +134,13 @@ written using \href{#method-upload_file}{
 this will throw an error. See \href{#method-download_file}{
 \code{kelp$download_file()}} to download as a file.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{kelp$download_object(fid, collection = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{kelp$download_object(id, collection = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{fid}}{SeaweedFS file ID to download}
+\item{\code{id}}{SeaweedFS file ID to download}
 
 \item{\code{collection}}{Optional collection name this file belongs to.}
 }
@@ -156,16 +156,16 @@ The R object.
 \subsection{Method \code{delete()}}{
 Delete file from SeaweedFS
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{kelp$delete(fid, collection = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{kelp$delete(id, collection = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{fid}}{SeaweedFS file ID to delete}
+\item{\code{id}}{SeaweedFS file ID to delete}
 
 \item{\code{collection}}{Optional collection name this file belongs to.
-This helps speedup lookup - only the single fid will be deleted.
+This helps speedup lookup - only the single id will be deleted.
 See \href{#method-delete_collection}{
 \code{kelp$delete_collection()}} to remove an entire
 collection.}

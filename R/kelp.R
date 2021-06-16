@@ -37,21 +37,21 @@ kelp <- R6::R6Class(
     #' @description
     #' Download file from SeaweedFS
     #'
-    #' If called with an `fid` matching an R object uploaded via
+    #' If called with an `id` matching an R object uploaded via
     #' \href{#method-upload_object}{\code{kelp$upload_object()}}
     #' then this will download raw bytes from SeaweedFS which can
     #' be converted back to R object at later point using `unserialize`
     #' or `readRDS`.
     #'
-    #' @param fid SeaweedFS file ID to read
+    #' @param id SeaweedFS file ID to read
     #' @param path Path to download file to
     #' @param collection Optional collection name this file belongs to.
     #'
     #' @return The file contents
-    download_file = function(fid, path = tempfile(), collection = NULL) {
-      volumes <- private$master$lookup(fid, collection)
+    download_file = function(id, path = tempfile(), collection = NULL) {
+      volumes <- private$master$lookup(id, collection)
       ## Download from 1st returned volume for now
-      volumes[[1]]$download_file(fid, path)
+      volumes[[1]]$download_file(id, path)
     },
 
     #' @description
@@ -81,30 +81,30 @@ kelp <- R6::R6Class(
     #' this will throw an error. See \href{#method-download_file}{
     #'   \code{kelp$download_file()}} to download as a file.
     #'
-    #' @param fid SeaweedFS file ID to download
+    #' @param id SeaweedFS file ID to download
     #' @param collection Optional collection name this file belongs to.
     #'
     #' @return The R object.
-    download_object = function(fid, collection = NULL) {
-      volumes <- private$master$lookup(fid, collection)
-      volumes[[1]]$download_object(fid)
+    download_object = function(id, collection = NULL) {
+      volumes <- private$master$lookup(id, collection)
+      volumes[[1]]$download_object(id)
     },
 
     #' @description
     #' Delete file from SeaweedFS
     #'
-    #' @param fid SeaweedFS file ID to delete
+    #' @param id SeaweedFS file ID to delete
     #' @param collection Optional collection name this file belongs to.
-    #'   This helps speedup lookup - only the single fid will be deleted.
+    #'   This helps speedup lookup - only the single id will be deleted.
     #'   See \href{#method-delete_collection}{
     #'   \code{kelp$delete_collection()}} to remove an entire
     #'   collection.
     #'
     #' @return Nothing, called for side effects
-    delete = function(fid, collection = NULL) {
-      volumes <- private$master$lookup(fid, collection)
+    delete = function(id, collection = NULL) {
+      volumes <- private$master$lookup(id, collection)
       for (volume in volumes) {
-        volume$delete(fid)
+        volume$delete(id)
       }
       invisible(TRUE)
     },
