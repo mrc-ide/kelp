@@ -66,6 +66,23 @@ seaweed_volume <- R6::R6Class(
     },
 
     #' @description
+    #' Upload vector of raw bytes to SeaweedFS.
+    #'
+    #' @param raw The object to upload
+    #' @param fid The file ID from SeaweedFS. See
+    #' \href{../../kelp/html/seaweed_master.html#method-assign}{
+    #' \code{seaweed_master$assign()}}
+    #' to get a file ID. Or use
+    #' \href{../../kelp/html/seaweed_master.html#method-upload_file}{
+    #' \code{seaweed_master$upload_file()}} to upload
+    #' directly.
+    #'
+    #' @return Size of uploaded object
+    upload_raw = function(fid, raw) {
+      private$client$POST(fid, body = list(file = raw))
+    },
+
+    #' @description
     #' Read file from SeaweedFS into R
     #'
     #' @param fid SeaweedFS file ID to read
@@ -114,6 +131,16 @@ seaweed_volume <- R6::R6Class(
                       "Try `$download_file`"))
         }
       )
+    },
+
+    #' @description
+    #' Download raw bytes from SeaweedFS
+    #'
+    #' @param fid SeaweedFS file ID to download
+    #'
+    #' @return The raw bytes
+    download_raw = function(fid) {
+      private$client$GET(fid, as = "raw")
     },
 
     #' @description

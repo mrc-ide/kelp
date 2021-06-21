@@ -91,6 +91,32 @@ kelp <- R6::R6Class(
     },
 
     #' @description
+    #' Upload vector of raw bytes to SeaweedFS.
+    #'
+    #' @param raw Object to be uploaded
+    #' @param collection Collection name, acts as a namespace.
+    #'
+    #' @return The uploaded file ID.
+    upload_raw = function(raw, collection = NULL) {
+      key <- private$master$assign(collection = collection)
+      volume <- seaweed_volume$new(key$publicUrl)
+      volume$upload_raw(key$fid, raw)
+      key$fid
+    },
+
+    #' @description
+    #' Download vector of raw bytes from SeaweedFS
+    #'
+    #' @param id SeaweedFS file ID to download
+    #' @param collection Optional collection name this file belongs to.
+    #'
+    #' @return Vector of raw bytes.
+    download_raw = function(id, collection = NULL) {
+      volumes <- private$master$lookup(id, collection)
+      volumes[[1]]$download_raw(id)
+    },
+
+    #' @description
     #' Delete file from SeaweedFS
     #'
     #' @param id SeaweedFS file ID to delete

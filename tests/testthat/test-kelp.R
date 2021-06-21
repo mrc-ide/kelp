@@ -54,3 +54,23 @@ test_that("arbitrary R object can be stored and retrieved", {
   out <- fs$download_object(fid)
   expect_equal(out, mtcars)
 })
+
+test_that("raw bytes can be uploaded and downloaded", {
+  test_seaweed_available()
+  fs <- kelp$new(seaweed_master_url)
+  bytes <- object_to_bin(list(x = 1, y = 2))
+
+  fid <- fs$upload_raw(bytes)
+  out <- fs$download_raw(fid)
+  expect_equal(out, bytes)
+})
+
+test_that("uploaded raw bytes can be downloaded as object", {
+  test_seaweed_available()
+  fs <- kelp$new(seaweed_master_url)
+  bytes <- object_to_bin(list(x = 1, y = 2))
+
+  fid <- fs$upload_raw(bytes)
+  out <- fs$download_object(fid)
+  expect_equal(out, list(x = 1, y = 2))
+})

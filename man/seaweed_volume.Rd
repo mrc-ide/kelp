@@ -16,9 +16,11 @@ details
 \item \href{#method-new}{\code{seaweed_volume$new()}}
 \item \href{#method-upload_file}{\code{seaweed_volume$upload_file()}}
 \item \href{#method-upload_object}{\code{seaweed_volume$upload_object()}}
+\item \href{#method-upload_raw}{\code{seaweed_volume$upload_raw()}}
 \item \href{#method-read}{\code{seaweed_volume$read()}}
 \item \href{#method-download_file}{\code{seaweed_volume$download_file()}}
 \item \href{#method-download_object}{\code{seaweed_volume$download_object()}}
+\item \href{#method-download_raw}{\code{seaweed_volume$download_raw()}}
 \item \href{#method-delete}{\code{seaweed_volume$delete()}}
 }
 }
@@ -103,6 +105,34 @@ Size of uploaded object
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-upload_raw"></a>}}
+\if{latex}{\out{\hypertarget{method-upload_raw}{}}}
+\subsection{Method \code{upload_raw()}}{
+Upload vector of raw bytes to SeaweedFS.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{seaweed_volume$upload_raw(fid, raw)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{fid}}{The file ID from SeaweedFS. See
+\href{../../kelp/html/seaweed_master.html#method-assign}{
+\code{seaweed_master$assign()}}
+to get a file ID. Or use
+\href{../../kelp/html/seaweed_master.html#method-upload_file}{
+\code{seaweed_master$upload_file()}} to upload
+directly.}
+
+\item{\code{raw}}{The object to upload}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Size of uploaded object
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-read"></a>}}
 \if{latex}{\out{\hypertarget{method-read}{}}}
 \subsection{Method \code{read()}}{
@@ -174,6 +204,26 @@ this will throw an error. See \href{#method-download_file}{
 }
 \subsection{Returns}{
 The deserialized object
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-download_raw"></a>}}
+\if{latex}{\out{\hypertarget{method-download_raw}{}}}
+\subsection{Method \code{download_raw()}}{
+Download raw bytes from SeaweedFS
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{seaweed_volume$download_raw(fid)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{fid}}{SeaweedFS file ID to download}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+The raw bytes
 }
 }
 \if{html}{\out{<hr>}}
