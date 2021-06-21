@@ -73,7 +73,7 @@ Create a kelp object for interacting with SeaweedFS." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">kelp</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -136,8 +136,6 @@ Create a kelp object for interacting with SeaweedFS." />
 <li><p><a href='#method-download_file'><code>kelp$download_file()</code></a></p></li>
 <li><p><a href='#method-upload_object'><code>kelp$upload_object()</code></a></p></li>
 <li><p><a href='#method-download_object'><code>kelp$download_object()</code></a></p></li>
-<li><p><a href='#method-upload_raw'><code>kelp$upload_raw()</code></a></p></li>
-<li><p><a href='#method-download_raw'><code>kelp$download_raw()</code></a></p></li>
 <li><p><a href='#method-delete'><code>kelp$delete()</code></a></p></li>
 <li><p><a href='#method-delete_collection'><code>kelp$delete_collection()</code></a></p></li>
 </ul>
@@ -224,34 +222,6 @@ this will throw an error. See <a href='#method-download_file'>
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>The R object.</p>
-<p><hr>
-<a id="method-upload_raw"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>upload_raw()</code></h3>
-<p>Upload vector of raw bytes to SeaweedFS.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>kelp</span><span class='op'>$</span><span class='fu'>upload_raw</span><span class='op'>(</span><span class='va'>raw</span>, collection <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>raw</code></dt><dd><p>Object to be uploaded</p></dd>
-
-<dt><code>collection</code></dt><dd><p>Collection name, acts as a namespace.</p></dd>
-
-</dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>The uploaded file ID.</p>
-<p><hr>
-<a id="method-download_raw"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>download_raw()</code></h3>
-<p>Download vector of raw bytes from SeaweedFS</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>kelp</span><span class='op'>$</span><span class='fu'>download_raw</span><span class='op'>(</span><span class='va'>id</span>, collection <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>id</code></dt><dd><p>SeaweedFS file ID to download</p></dd>
-
-<dt><code>collection</code></dt><dd><p>Optional collection name this file belongs to.</p></dd>
-
-</dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>Vector of raw bytes.</p>
 <p><hr>
 <a id="method-delete"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>delete()</code></h3>
 <p>Delete file from SeaweedFS</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
