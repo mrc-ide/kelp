@@ -20,6 +20,8 @@ This is a slightly higher level abstraction than \code{\link[=seaweed_master]{se
 \item \href{#method-download_file}{\code{kelp$download_file()}}
 \item \href{#method-upload_object}{\code{kelp$upload_object()}}
 \item \href{#method-download_object}{\code{kelp$download_object()}}
+\item \href{#method-upload_raw}{\code{kelp$upload_raw()}}
+\item \href{#method-download_raw}{\code{kelp$download_raw()}}
 \item \href{#method-delete}{\code{kelp$delete()}}
 \item \href{#method-delete_collection}{\code{kelp$delete_collection()}}
 }
@@ -148,6 +150,50 @@ this will throw an error. See \href{#method-download_file}{
 }
 \subsection{Returns}{
 The R object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-upload_raw"></a>}}
+\if{latex}{\out{\hypertarget{method-upload_raw}{}}}
+\subsection{Method \code{upload_raw()}}{
+Upload vector of raw bytes to SeaweedFS.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{kelp$upload_raw(raw, collection = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{raw}}{Object to be uploaded}
+
+\item{\code{collection}}{Collection name, acts as a namespace.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+The uploaded file ID.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-download_raw"></a>}}
+\if{latex}{\out{\hypertarget{method-download_raw}{}}}
+\subsection{Method \code{download_raw()}}{
+Download vector of raw bytes from SeaweedFS
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{kelp$download_raw(id, collection = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{SeaweedFS file ID to download}
+
+\item{\code{collection}}{Optional collection name this file belongs to.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Vector of raw bytes.
 }
 }
 \if{html}{\out{<hr>}}

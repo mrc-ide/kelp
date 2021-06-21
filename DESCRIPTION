@@ -1,6 +1,6 @@
 Package: kelp
 Title: SeaweedFS R Client
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(person("Rob", "Ashton", role = c("aut", "cre"),
                     email = "r.ashton@imperial.ac.uk"),
              person("Imperial College of Science, Technology and Medicine",
