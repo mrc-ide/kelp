@@ -74,7 +74,7 @@ details" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">kelp</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -132,9 +132,11 @@ details</p>
 <li><p><a href='#method-new'><code>seaweed_volume$new()</code></a></p></li>
 <li><p><a href='#method-upload_file'><code>seaweed_volume$upload_file()</code></a></p></li>
 <li><p><a href='#method-upload_object'><code>seaweed_volume$upload_object()</code></a></p></li>
+<li><p><a href='#method-upload_raw'><code>seaweed_volume$upload_raw()</code></a></p></li>
 <li><p><a href='#method-read'><code>seaweed_volume$read()</code></a></p></li>
 <li><p><a href='#method-download_file'><code>seaweed_volume$download_file()</code></a></p></li>
 <li><p><a href='#method-download_object'><code>seaweed_volume$download_object()</code></a></p></li>
+<li><p><a href='#method-download_raw'><code>seaweed_volume$download_raw()</code></a></p></li>
 <li><p><a href='#method-delete'><code>seaweed_volume$delete()</code></a></p></li>
 </ul>
 <p><hr>
@@ -193,6 +195,26 @@ directly.</p></dd>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>Size of uploaded object</p>
 <p><hr>
+<a id="method-upload_raw"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>upload_raw()</code></h3>
+<p>Upload vector of raw bytes to SeaweedFS.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>seaweed_volume</span><span class='op'>$</span><span class='fu'>upload_raw</span><span class='op'>(</span><span class='va'>fid</span>, <span class='va'>raw</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>fid</code></dt><dd><p>The file ID from SeaweedFS. See
+<a href='../../kelp/html/seaweed_master.html#method-assign'>
+<code>seaweed_master$assign()</code></a>
+to get a file ID. Or use
+<a href='../../kelp/html/seaweed_master.html#method-upload_file'>
+<code>seaweed_master$upload_file()</code></a> to upload
+directly.</p></dd>
+
+<dt><code>raw</code></dt><dd><p>The object to upload</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>Size of uploaded object</p>
+<p><hr>
 <a id="method-read"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>read()</code></h3>
 <p>Read file from SeaweedFS into R</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>seaweed_volume</span><span class='op'>$</span><span class='fu'>read</span><span class='op'>(</span><span class='va'>fid</span><span class='op'>)</span></pre><p></div></p>
@@ -240,6 +262,18 @@ this will throw an error. See <a href='#method-download_file'>
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>The deserialized object</p>
+<p><hr>
+<a id="method-download_raw"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>download_raw()</code></h3>
+<p>Download raw bytes from SeaweedFS</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>seaweed_volume</span><span class='op'>$</span><span class='fu'>download_raw</span><span class='op'>(</span><span class='va'>fid</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>fid</code></dt><dd><p>SeaweedFS file ID to download</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>The raw bytes</p>
 <p><hr>
 <a id="method-delete"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>delete()</code></h3>
 <p>Delete a file from SeaweedFS</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
