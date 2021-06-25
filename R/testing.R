@@ -32,10 +32,7 @@ kelp_harness <- R6::R6Class(
     #' @return The uploaded file ID.
     upload_file = function(path, collection = NULL) {
       id <- sprintf("%s,%s", sample.int(9, 1), ids::random_id(bytes = 5))
-      if (!is.null(collection)) {
-        private$collections[[collection]] <-
-          c(private$collections[[collection]], id)
-      }
+      private$add_collection(collection, id)
       file.copy(path, file.path(private$dir, id), overwrite = TRUE)
       id
     },
@@ -74,10 +71,7 @@ kelp_harness <- R6::R6Class(
     #' @return The uploaded file ID.
     upload_object = function(object, collection = NULL) {
       id <- sprintf("%s,%s", sample.int(9, 1), ids::random_id(bytes = 5))
-      if (!is.null(collection)) {
-        private$collections[[collection]] <-
-          c(private$collection[[collection]], id)
-      }
+      private$add_collection(collection, id)
       saveRDS(object, file.path(private$dir, id))
       id
     },
@@ -108,10 +102,7 @@ kelp_harness <- R6::R6Class(
     #' @return The uploaded file ID.
     upload_raw = function(raw, collection = NULL) {
       id <- sprintf("%s,%s", sample.int(9, 1), ids::random_id(bytes = 5))
-      if (!is.null(collection)) {
-        private$collections[[collection]] <-
-          c(private$collection[[collection]], id)
-      }
+      private$add_collection(collection, id)
       writeBin(raw, file.path(private$dir, id))
       id
     },
@@ -140,11 +131,7 @@ kelp_harness <- R6::R6Class(
     #' @return Nothing, called for side effects
     delete = function(id, collection = NULL) {
       unlink(file.path(private$dir, id))
-      if (!is.null(collection)) {
-        private$collections[[collection]] <-
-          private$collections[[collection]][
-            private$collections[[collection]] != id]
-      }
+      private$add_collection(collection, id)
       invisible(TRUE)
     },
 
@@ -165,6 +152,12 @@ kelp_harness <- R6::R6Class(
   private = list(
     # Temp directory to store files in
     dir = NULL,
-    collections = list()
+    collections = list(),
+    add_collection = function(collection, id) {
+      if (!is.null(collection)) {
+        private$collections[[collection]] <-
+          c(private$collections[[collection]], id)
+      }
+    }
   )
 )
