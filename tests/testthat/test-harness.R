@@ -1,14 +1,18 @@
 test_that("test harness and kelp advertise same interface", {
-  harness <- kelp_harness$new("url")
+  harness <- kelp_harness$new(seaweed_master_url)
   real <- kelp$new(seaweed_master_url)
 
   harness_funcs <- ls(harness)
   kelp_funcs <- ls(real)
   expect_equal(harness_funcs, kelp_funcs)
   for (name in harness_funcs) {
-    harness_func <- harness[[name]]
-    kelp_func <- real[[name]]
-    expect_equal(args(harness_func), args(kelp_func))
+    harness_member <- harness[[name]]
+    kelp_member <- real[[name]]
+    if (is.function(harness_member)) {
+      expect_equal(args(harness_member), args(kelp_member))
+    } else {
+      expect_equal(harness_member, kelp_member)
+    }
   }
 })
 

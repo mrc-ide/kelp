@@ -11,6 +11,9 @@ kelp_harness <- R6::R6Class(
   cloneable = FALSE,
 
   public = list(
+    #' @field seaweed_url Base URL for seaweed master. Can be a dummy value.
+    seaweed_url = NULL,
+
     #' @description
     #' Create a mock kelp client object for testing which doesn't require
     #' a Seaweed instance to be running.
@@ -19,6 +22,7 @@ kelp_harness <- R6::R6Class(
     #'
     #' @return A new `kelp_harness` object
     initialize = function(seaweed_url) {
+      self$seaweed_url <- seaweed_url
       private$dir <- tempfile()
       dir.create(private$dir)
     },

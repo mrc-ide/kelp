@@ -10,6 +10,9 @@ kelp <- R6::R6Class(
   cloneable = FALSE,
 
   public = list(
+    #' @field seaweed_url Base URL for seaweed master.
+    seaweed_url = NULL,
+
     #' @description
     #' Create client object for sending http requests to seaweed
     #'
@@ -17,6 +20,7 @@ kelp <- R6::R6Class(
     #'
     #' @return A new `kelp` object
     initialize = function(seaweed_url) {
+      self$seaweed_url <- seaweed_url
       private$master <- seaweed_master$new(seaweed_url)
     },
 

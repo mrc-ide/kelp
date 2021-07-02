@@ -13,6 +13,13 @@ Exposes same interface as \code{\link[=kelp]{kelp()}} but with mock responses, c
 in place of a real Kelp object for testing when it might be quicker to
 not have SeaweedFS itself running. Just backed by a local temp directory.
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{seaweed_url}}{Base URL for seaweed master. Can be a dummy value.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
