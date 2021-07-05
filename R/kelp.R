@@ -21,6 +21,7 @@ kelp <- R6::R6Class(
     #' @return A new `kelp` object
     initialize = function(seaweed_url) {
       self$seaweed_url <- seaweed_url
+      lockBinding("seaweed_url", self)
       private$master <- seaweed_master$new(seaweed_url)
     },
 

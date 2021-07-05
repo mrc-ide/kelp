@@ -1,13 +1,15 @@
-#' Create a kelp test harness object.
+#' Create a kelp fake object.
 #'
-#' Exposes same interface as [kelp()] but with mock responses, can be used
-#' in place of a real Kelp object for testing when it might be quicker to
-#' not have SeaweedFS itself running. Just backed by a local temp directory.
+#' Exposes same interface as [kelp()] but stores files to a local temp
+#' directory. Can be used for testing when a SeaweedFS instance
+#' might not be available. All operations will create file ids will
+#' return simulated data which matches structure of SeaweedFS. Uploading or
+#' downloading files will copy to/from the temp directory.
 #'
 #' @export
 #' @importFrom R6 R6Class
-kelp_harness <- R6::R6Class(
-  "kelp_harness",
+kelp_fake <- R6::R6Class(
+  "kelp_fake",
   cloneable = FALSE,
 
   public = list(
@@ -20,9 +22,10 @@ kelp_harness <- R6::R6Class(
     #'
     #' @param seaweed_url Root URL of Seaweed (can be anything for testing)
     #'
-    #' @return A new `kelp_harness` object
+    #' @return A new `kelp_fake` object
     initialize = function(seaweed_url) {
       self$seaweed_url <- seaweed_url
+      lockBinding("seaweed_url", self)
       private$dir <- tempfile()
       dir.create(private$dir)
     },
@@ -35,6 +38,11 @@ kelp_harness <- R6::R6Class(
     #'
     #' @return The uploaded file ID.
     upload_file = function(path, collection = NULL) {
+      ## Mimic SeaweedFS fid which contains
+      ## volume ID: ID of the volume file is stored on
+      ## needle id: monotonously increasing unique number as hex
+      ## file cookie: 32-bit random hex integer
+      ## In the format: <volume-id>,<needle-id><cookie>
       id <- sprintf("%s,%s", sample.int(9, 1), ids::random_id(bytes = 5))
       private$add_collection(collection, id)
       file.copy(path, file.path(private$dir, id), overwrite = TRUE)

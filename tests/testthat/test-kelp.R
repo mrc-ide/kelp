@@ -6,7 +6,7 @@ test_that("file can be uploaded, read and deleted from SeaweedFS", {
   t <- tempfile()
   writeLines("test file", t)
   res <- fs$upload_file(t)
-  expect_match(res, "\\d+,[A-Za-z0-9]{10}")
+  expect_match(res, "^\\d+,[A-Za-z0-9]{10}$")
 
   ## File can be downloaded
   download <- fs$download_file(res)

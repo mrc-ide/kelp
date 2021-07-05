@@ -1,30 +1,30 @@
-test_that("test harness and kelp advertise same interface", {
-  harness <- kelp_harness$new(seaweed_master_url)
+test_that("test kelp fake and kelp advertise same interface", {
+  fake <- kelp_fake$new(seaweed_master_url)
   real <- kelp$new(seaweed_master_url)
 
-  harness_funcs <- ls(harness)
+  fake_funcs <- ls(fake)
   kelp_funcs <- ls(real)
-  expect_equal(harness_funcs, kelp_funcs)
-  for (name in harness_funcs) {
-    harness_member <- harness[[name]]
+  expect_equal(fake_funcs, kelp_funcs)
+  for (name in fake_funcs) {
+    fake_memer <- fake[[name]]
     kelp_member <- real[[name]]
-    if (is.function(harness_member)) {
-      expect_equal(args(harness_member), args(kelp_member))
+    if (is.function(fake_memer)) {
+      expect_equal(formals(fake_memer), formals(kelp_member))
     } else {
-      expect_equal(harness_member, kelp_member)
+      expect_equal(fake_memer, kelp_member)
     }
   }
 })
 
-test_that("test harness: can upload, read and delete a file", {
+test_that("test fake: can upload, read and delete a file", {
   test_seaweed_available()
-  fs <- kelp_harness$new(seaweed_master_url)
+  fs <- kelp_fake$new(seaweed_master_url)
 
   ## File can be written
   t <- tempfile()
   writeLines("test file", t)
   res <- fs$upload_file(t)
-  expect_match(res, "\\d+,[A-Za-z0-9]{10}")
+  expect_match(res, "^\\d+,[A-Za-z0-9]{10}$")
 
   ## File can be downloaded
   download <- fs$download_file(res)
@@ -38,9 +38,9 @@ test_that("test harness: can upload, read and delete a file", {
   error <- expect_error(fs$download_file(res))
 })
 
-test_that("test harness: collection can be deleted", {
+test_that("test fake: collection can be deleted", {
   test_seaweed_available()
-  fs <- kelp_harness$new(seaweed_master_url)
+  fs <- kelp_fake$new(seaweed_master_url)
 
   ## Write files
   t <- tempfile()
@@ -58,9 +58,9 @@ test_that("test harness: collection can be deleted", {
   expect_error(fs$download_file(res2))
 })
 
-test_that("test harness: arbitrary R object can be stored and retrieved", {
+test_that("test fake: arbitrary R object can be stored and retrieved", {
   test_seaweed_available()
-  fs <- kelp_harness$new(seaweed_master_url)
+  fs <- kelp_fake$new(seaweed_master_url)
 
   obj <- list(x = 1, y = 2)
   fid <- fs$upload_object(obj)
@@ -72,9 +72,9 @@ test_that("test harness: arbitrary R object can be stored and retrieved", {
   expect_equal(out, mtcars)
 })
 
-test_that("test harness: raw bytes can be uploaded and downloaded", {
+test_that("test fake: raw bytes can be uploaded and downloaded", {
   test_seaweed_available()
-  fs <- kelp_harness$new(seaweed_master_url)
+  fs <- kelp_fake$new(seaweed_master_url)
   bytes <- object_to_bin(list(x = 1, y = 2))
 
   fid <- fs$upload_raw(bytes)
@@ -82,9 +82,9 @@ test_that("test harness: raw bytes can be uploaded and downloaded", {
   expect_equal(out, bytes)
 })
 
-test_that("test harness: uploaded raw bytes can be downloaded as object", {
+test_that("test fake: uploaded raw bytes can be downloaded as object", {
   test_seaweed_available()
-  fs <- kelp_harness$new(seaweed_master_url)
+  fs <- kelp_fake$new(seaweed_master_url)
   bytes <- object_to_bin(list(x = 1, y = 2))
 
   fid <- fs$upload_raw(bytes)
