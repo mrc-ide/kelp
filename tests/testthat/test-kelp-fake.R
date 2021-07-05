@@ -1,6 +1,24 @@
-test_that("file can be uploaded, read and deleted from SeaweedFS", {
+test_that("test kelp fake and kelp advertise same interface", {
+  fake <- kelp_fake$new(seaweed_master_url)
+  real <- kelp$new(seaweed_master_url)
+
+  fake_funcs <- ls(fake)
+  kelp_funcs <- ls(real)
+  expect_equal(fake_funcs, kelp_funcs)
+  for (name in fake_funcs) {
+    fake_memer <- fake[[name]]
+    kelp_member <- real[[name]]
+    if (is.function(fake_memer)) {
+      expect_equal(formals(fake_memer), formals(kelp_member))
+    } else {
+      expect_equal(fake_memer, kelp_member)
+    }
+  }
+})
+
+test_that("test fake: can upload, read and delete a file", {
   test_seaweed_available()
-  fs <- kelp$new(seaweed_master_url)
+  fs <- kelp_fake$new(seaweed_master_url)
 
   ## File can be written
   t <- tempfile()
@@ -17,13 +35,12 @@ test_that("file can be uploaded, read and deleted from SeaweedFS", {
   fs$delete(res)
 
   ## File no longer exists
-  error <- expect_error(fs$download_file(res), "Client error: (404) Not Found",
-                        fixed = TRUE)
+  error <- expect_error(fs$download_file(res))
 })
 
-test_that("collection can be deleted", {
+test_that("test fake: collection can be deleted", {
   test_seaweed_available()
-  fs <- kelp$new(seaweed_master_url)
+  fs <- kelp_fake$new(seaweed_master_url)
 
   ## Write files
   t <- tempfile()
@@ -41,9 +58,9 @@ test_that("collection can be deleted", {
   expect_error(fs$download_file(res2))
 })
 
-test_that("arbitrary R object can be stored and retrieved", {
+test_that("test fake: arbitrary R object can be stored and retrieved", {
   test_seaweed_available()
-  fs <- kelp$new(seaweed_master_url)
+  fs <- kelp_fake$new(seaweed_master_url)
 
   obj <- list(x = 1, y = 2)
   fid <- fs$upload_object(obj)
@@ -55,9 +72,9 @@ test_that("arbitrary R object can be stored and retrieved", {
   expect_equal(out, mtcars)
 })
 
-test_that("raw bytes can be uploaded and downloaded", {
+test_that("test fake: raw bytes can be uploaded and downloaded", {
   test_seaweed_available()
-  fs <- kelp$new(seaweed_master_url)
+  fs <- kelp_fake$new(seaweed_master_url)
   bytes <- object_to_bin(list(x = 1, y = 2))
 
   fid <- fs$upload_raw(bytes)
@@ -65,9 +82,9 @@ test_that("raw bytes can be uploaded and downloaded", {
   expect_equal(out, bytes)
 })
 
-test_that("uploaded raw bytes can be downloaded as object", {
+test_that("test fake: uploaded raw bytes can be downloaded as object", {
   test_seaweed_available()
-  fs <- kelp$new(seaweed_master_url)
+  fs <- kelp_fake$new(seaweed_master_url)
   bytes <- object_to_bin(list(x = 1, y = 2))
 
   fid <- fs$upload_raw(bytes)

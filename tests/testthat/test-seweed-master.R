@@ -3,7 +3,7 @@ test_that("file key can be assigned", {
   master <- seaweed_master$new(seaweed_master_url)
   res <- master$assign()
   expect_setequal(names(res), c("fid", "url", "publicUrl", "count"))
-  expect_match(res$fid, "\\d+,[A-Za-z0-9]{10}")
+  expect_match(res$fid, "^\\d+,[A-Za-z0-9]{10}$")
 })
 
 test_that("file key can be assigned with a collection", {
@@ -11,7 +11,7 @@ test_that("file key can be assigned with a collection", {
   master <- seaweed_master$new(seaweed_master_url)
   res <- master$assign(collection = "test_collection")
   expect_setequal(names(res), c("fid", "url", "publicUrl", "count"))
-  expect_match(res$fid, "\\d+,[A-Za-z0-9]{10}")
+  expect_match(res$fid, "^\\d+,[A-Za-z0-9]{10}$")
 })
 
 test_that("volumes can be located with fid", {
@@ -87,10 +87,10 @@ test_that("file can be directly uploaded to master", {
   res <- master$upload(t)
   expect_setequal(names(res),
                   c("eTag", "fid", "fileName", "fileUrl", "size"))
-  expect_match(res$fid, "\\d+,[A-Za-z0-9]{10}")
+  expect_match(res$fid, "^\\d+,[A-Za-z0-9]{10}$")
   expect_equal(res$fileName, basename(t))
   ## fileUrl is <ip-address>:<port>/<fid>
-  expect_match(res$fileUrl, "[\\d\\.]+:\\d{4}/\\d+,[A-Za-z0-9]{10}",
+  expect_match(res$fileUrl, "^[\\d\\.]+:\\d{4}/\\d+,[A-Za-z0-9]{10}$",
                perl = TRUE)
   expect_equal(res$size, 10)
 })
