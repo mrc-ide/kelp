@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a kelp object for interacting with SeaweedFS. — kelp • kelp</title>
+<title>Create a kelp fake object. — kelp_fake • kelp</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Create a kelp object for interacting with SeaweedFS. — kelp" />
-<meta property="og:description" content="Create a kelp object for interacting with SeaweedFS.
-Create a kelp object for interacting with SeaweedFS." />
+<meta property="og:title" content="Create a kelp fake object. — kelp_fake" />
+<meta property="og:description" content="Create a kelp fake object.
+Create a kelp fake object." />
 
 
 
@@ -109,26 +109,29 @@ Create a kelp object for interacting with SeaweedFS." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a kelp object for interacting with SeaweedFS.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/mrc-ide/kelp/blob/master/R/kelp.R'><code>R/kelp.R</code></a></small>
-    <div class="hidden name"><code>kelp.Rd</code></div>
+    <h1>Create a kelp fake object.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/mrc-ide/kelp/blob/master/R/kelp_fake.R'><code>R/kelp_fake.R</code></a></small>
+    <div class="hidden name"><code>kelp_fake.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create a kelp object for interacting with SeaweedFS.</p>
-<p>Create a kelp object for interacting with SeaweedFS.</p>
+    <p>Create a kelp fake object.</p>
+<p>Create a kelp fake object.</p>
     </div>
 
 
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This is a slightly higher level abstraction than <code><a href='seaweed_master.html'>seaweed_master()</a></code> and
-<code><a href='seaweed_volume.html'>seaweed_volume()</a></code>.</p>
+    <p>Exposes same interface as <code><a href='kelp.html'>kelp()</a></code> but stores files to a local temp
+directory. Can be used for testing when a SeaweedFS instance
+might not be available. All operations will create file ids will
+return simulated data which matches structure of SeaweedFS. Uploading or
+downloading files will copy to/from the temp directory.</p>
     <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
     <p><div class="r6-fields"></p><dl>
-<dt><code>seaweed_url</code></dt><dd><p>Base URL for seaweed master.</p></dd>
+<dt><code>seaweed_url</code></dt><dd><p>Base URL for seaweed master. Can be a dummy value.</p></dd>
 
 </dl><p></div></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
@@ -137,32 +140,33 @@ Create a kelp object for interacting with SeaweedFS." />
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
-<li><p><a href='#method-new'><code>kelp$new()</code></a></p></li>
-<li><p><a href='#method-upload_file'><code>kelp$upload_file()</code></a></p></li>
-<li><p><a href='#method-download_file'><code>kelp$download_file()</code></a></p></li>
-<li><p><a href='#method-upload_object'><code>kelp$upload_object()</code></a></p></li>
-<li><p><a href='#method-download_object'><code>kelp$download_object()</code></a></p></li>
-<li><p><a href='#method-upload_raw'><code>kelp$upload_raw()</code></a></p></li>
-<li><p><a href='#method-download_raw'><code>kelp$download_raw()</code></a></p></li>
-<li><p><a href='#method-delete'><code>kelp$delete()</code></a></p></li>
-<li><p><a href='#method-delete_collection'><code>kelp$delete_collection()</code></a></p></li>
+<li><p><a href='#method-new'><code>kelp_fake$new()</code></a></p></li>
+<li><p><a href='#method-upload_file'><code>kelp_fake$upload_file()</code></a></p></li>
+<li><p><a href='#method-download_file'><code>kelp_fake$download_file()</code></a></p></li>
+<li><p><a href='#method-upload_object'><code>kelp_fake$upload_object()</code></a></p></li>
+<li><p><a href='#method-download_object'><code>kelp_fake$download_object()</code></a></p></li>
+<li><p><a href='#method-upload_raw'><code>kelp_fake$upload_raw()</code></a></p></li>
+<li><p><a href='#method-download_raw'><code>kelp_fake$download_raw()</code></a></p></li>
+<li><p><a href='#method-delete'><code>kelp_fake$delete()</code></a></p></li>
+<li><p><a href='#method-delete_collection'><code>kelp_fake$delete_collection()</code></a></p></li>
 </ul>
 <p><hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Create client object for sending http requests to seaweed</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>kelp</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>seaweed_url</span><span class='op'>)</span></pre><p></div></p>
+<p>Create a mock kelp client object for testing which doesn't require
+a Seaweed instance to be running.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>kelp_fake</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>seaweed_url</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>seaweed_url</code></dt><dd><p>Root URL of Seaweed</p></dd>
+<dt><code>seaweed_url</code></dt><dd><p>Root URL of Seaweed (can be anything for testing)</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A new <code>kelp</code> object</p>
+<p>A new <code>kelp_fake</code> object</p>
 <p><hr>
 <a id="method-upload_file"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>upload_file()</code></h3>
-<p>Upload file to SeaweedFS</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>kelp</span><span class='op'>$</span><span class='fu'>upload_file</span><span class='op'>(</span><span class='va'>path</span>, collection <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+<p>Upload file</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>kelp_fake</span><span class='op'>$</span><span class='fu'>upload_file</span><span class='op'>(</span><span class='va'>path</span>, collection <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -175,17 +179,17 @@ Create a kelp object for interacting with SeaweedFS." />
 <p>The uploaded file ID.</p>
 <p><hr>
 <a id="method-download_file"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>download_file()</code></h3>
-<p>Download file from SeaweedFS</p>
+<p>Download file</p>
 <p>If called with an <code>id</code> matching an R object uploaded via
 <a href='#method-upload_object'><code>kelp$upload_object()</code></a>
-then this will download raw bytes from SeaweedFS which can
+then this will download raw bytes which can
 be converted back to R object at later point using <code>unserialize</code>
 or <code>readRDS</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>kelp</span><span class='op'>$</span><span class='fu'>download_file</span><span class='op'>(</span><span class='va'>id</span>, path <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span>, collection <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>kelp_fake</span><span class='op'>$</span><span class='fu'>download_file</span><span class='op'>(</span><span class='va'>id</span>, path <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span>, collection <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>id</code></dt><dd><p>SeaweedFS file ID to read</p></dd>
+<dt><code>id</code></dt><dd><p>File ID to read</p></dd>
 
 <dt><code>path</code></dt><dd><p>Path to download file to</p></dd>
 
@@ -196,11 +200,10 @@ or <code>readRDS</code>.</p><h4 class='hasAnchor' id='arguments'><a class='ancho
 <p>The file contents</p>
 <p><hr>
 <a id="method-upload_object"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>upload_object()</code></h3>
-<p>Upload arbitrary R object to SeaweedFS.</p>
+<p>Upload arbitrary R object</p>
 <p>This serializes R object to raw vector of bytes and then
-saves bytes to SeaweedFS. To recover R object as saved use
-<a href='#method-download_object'><code>seaweed_volume$download_object()</code></a></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>kelp</span><span class='op'>$</span><span class='fu'>upload_object</span><span class='op'>(</span><span class='va'>object</span>, collection <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+saves bytes.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>kelp_fake</span><span class='op'>$</span><span class='fu'>upload_object</span><span class='op'>(</span><span class='va'>object</span>, collection <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -213,17 +216,17 @@ saves bytes to SeaweedFS. To recover R object as saved use
 <p>The uploaded file ID.</p>
 <p><hr>
 <a id="method-download_object"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>download_object()</code></h3>
-<p>Download arbitrary R object from SeaweedFS</p>
-<p>If data downloaded from SeaweedFS is not unserializable (i.e. it was
+<p>Download arbitrary R object</p>
+<p>If data downloaded is not unserializable (i.e. it was
 written using <a href='#method-upload_file'>
 <code>kelp$upload_file()</code></a>) then
 this will throw an error. See <a href='#method-download_file'>
 <code>kelp$download_file()</code></a> to download as a file.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>kelp</span><span class='op'>$</span><span class='fu'>download_object</span><span class='op'>(</span><span class='va'>id</span>, collection <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>kelp_fake</span><span class='op'>$</span><span class='fu'>download_object</span><span class='op'>(</span><span class='va'>id</span>, collection <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>id</code></dt><dd><p>SeaweedFS file ID to download</p></dd>
+<dt><code>id</code></dt><dd><p>File ID to download</p></dd>
 
 <dt><code>collection</code></dt><dd><p>Optional collection name this file belongs to.</p></dd>
 
@@ -232,8 +235,8 @@ this will throw an error. See <a href='#method-download_file'>
 <p>The R object.</p>
 <p><hr>
 <a id="method-upload_raw"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>upload_raw()</code></h3>
-<p>Upload vector of raw bytes to SeaweedFS.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>kelp</span><span class='op'>$</span><span class='fu'>upload_raw</span><span class='op'>(</span><span class='va'>raw</span>, collection <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+<p>Upload vector of raw bytes.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>kelp_fake</span><span class='op'>$</span><span class='fu'>upload_raw</span><span class='op'>(</span><span class='va'>raw</span>, collection <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -246,12 +249,12 @@ this will throw an error. See <a href='#method-download_file'>
 <p>The uploaded file ID.</p>
 <p><hr>
 <a id="method-download_raw"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>download_raw()</code></h3>
-<p>Download vector of raw bytes from SeaweedFS</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>kelp</span><span class='op'>$</span><span class='fu'>download_raw</span><span class='op'>(</span><span class='va'>id</span>, collection <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+<p>Download vector of raw bytes.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>kelp_fake</span><span class='op'>$</span><span class='fu'>download_raw</span><span class='op'>(</span><span class='va'>id</span>, collection <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>id</code></dt><dd><p>SeaweedFS file ID to download</p></dd>
+<dt><code>id</code></dt><dd><p>File ID to download</p></dd>
 
 <dt><code>collection</code></dt><dd><p>Optional collection name this file belongs to.</p></dd>
 
@@ -260,12 +263,12 @@ this will throw an error. See <a href='#method-download_file'>
 <p>Vector of raw bytes.</p>
 <p><hr>
 <a id="method-delete"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>delete()</code></h3>
-<p>Delete file from SeaweedFS</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>kelp</span><span class='op'>$</span><span class='fu'>delete</span><span class='op'>(</span><span class='va'>id</span>, collection <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+<p>Delete file</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>kelp_fake</span><span class='op'>$</span><span class='fu'>delete</span><span class='op'>(</span><span class='va'>id</span>, collection <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>id</code></dt><dd><p>SeaweedFS file ID to delete</p></dd>
+<dt><code>id</code></dt><dd><p>File ID to delete</p></dd>
 
 <dt><code>collection</code></dt><dd><p>Optional collection name this file belongs to.
 This helps speedup lookup - only the single id will be deleted.
@@ -279,7 +282,7 @@ collection.</p></dd>
 <p><hr>
 <a id="method-delete_collection"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>delete_collection()</code></h3>
 <p>Delete a collection of files</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>kelp</span><span class='op'>$</span><span class='fu'>delete_collection</span><span class='op'>(</span><span class='va'>collection</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>kelp_fake</span><span class='op'>$</span><span class='fu'>delete_collection</span><span class='op'>(</span><span class='va'>collection</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
